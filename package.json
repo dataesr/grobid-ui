@@ -1,5 +1,6 @@
 {
   "name": "grobid-ui",
+  "homepage": "https://github.com/dataesr/grobid-ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
