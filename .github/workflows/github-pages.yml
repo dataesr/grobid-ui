@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DEPLOYMENT_URL: https://dataesr.github.io/catalog/
+  DEPLOYMENT_URL: https://dataesr.github.io/grobid-ui/
   MM_NOTIFICATION_CHANNEL: bots
 
 jobs:
@@ -40,14 +40,14 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Install dependencies and Build
-        run: npm ci --silent && npm run build --mode=poc -- --base=/catalog/
+        run: npm ci --silent && npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v4
         with:
-          # Upload server/dist repository
-          path: './server/dist'
+          # Upload dist repository
+          path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
