@@ -44,7 +44,7 @@ jobs:
           node-version: 22
           cache: 'npm'
       - name: Install dependencies and Build
-        run: npm ci --silent && npm run build
+        run: npm ci --silent && npm run build -- --base=/grobid-ui/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
