@@ -1,19 +1,20 @@
 // https://dev.to/hexshift/implementing-drag-drop-file-uploads-in-react-without-external-libraries-1d31
-import React, { useState } from "react";
+import { DragEvent, useState } from "react";
+
 
 function FileUploader() {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
+    const droppedFiles: File[] = Array.from(e.dataTransfer.files);
     // Filter File Types (Optional)
     // const imageFiles = droppedFiles.filter(file => file.type.startsWith("image/"));
     setFiles(droppedFiles);
   };
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
