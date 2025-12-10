@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.com/kermitt2/grobid/master/grobid-home/schemas/xsd/Grobid.xsd">
+	<teiHeader xml:lang="en">
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main" coords="2,89.87,125.09,432.26,15.12;2,233.19,147.00,145.62,15.12">How to build an Open Science Monitor based on publications? A French perspective</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown">
+					<licence/>
+				</availability>
+				<date type="published" when="2024-12">December 2024</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName coords="2,120.33,179.42,78.68,10.56"><forename type="first">Laetitia</forename><surname>Bracco</surname></persName>
+							<affiliation key="aff1" coords="2,231.33,217.28,153.86,10.56">
+								<note type="raw_affiliation"><label>2</label> University of Lorraine , France</note>
+								<orgName type="institution">University of Lorraine</orgName>
+								<address>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName coords="2,210.90,179.42,79.02,10.56"><forename type="first">Eric</forename><surname>Jeangirard</surname></persName>
+							<affiliation key="aff0" coords="2,140.36,203.33,335.59,10.56">
+								<note type="raw_affiliation"><label>1</label> French Ministry of Higher Education and Research , Paris , France</note>
+								<orgName type="institution">French Ministry of Higher Education and Research</orgName>
+								<address>
+									<settlement>Paris</settlement>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName coords="2,301.80,179.42,65.84,10.56"><forename type="first">Anne</forename><surname>L'hôte</surname></persName>
+							<affiliation key="aff0" coords="2,140.36,203.33,335.59,10.56">
+								<note type="raw_affiliation"><label>1</label> French Ministry of Higher Education and Research , Paris , France</note>
+								<orgName type="institution">French Ministry of Higher Education and Research</orgName>
+								<address>
+									<settlement>Paris</settlement>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName coords="2,402.29,179.42,84.86,10.56"><forename type="first">Laurent</forename><surname>Romary</surname></persName>
+							<affiliation key="aff2" coords="2,270.39,231.22,75.75,10.56">
+								<note type="raw_affiliation"><label>3</label> INRIA , France</note>
+								<orgName type="institution">INRIA</orgName>
+								<address>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main" coords="2,89.87,125.09,432.26,15.12;2,233.19,147.00,145.62,15.12">How to build an Open Science Monitor based on publications? A French perspective</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2024-12">December 2024</date>
+						</imprint>
+					</monogr>
+					<idno type="MD5">053C9BD1B242D396FCAB6A0D3D668052</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<encodingDesc>
+			<appInfo>
+				<application version="0.8.2" ident="GROBID" when="2025-12-10T10:56+0000">
+					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
+					<label type="revision">a91ee48</label>
+					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=1, consolidateHeader=1, consolidateFunders=1, includeRawAffiliations=true, includeRawCitations=true, includeRawCopyrights=true, generateTeiIds=false, generateTeiCoordinates=[ref, s, biblStruct, persName, figure, formula, head, note, title, affiliation], sentenceSegmentation=true, flavor=null</label>
+					<ref target="https://github.com/kermitt2/grobid"/>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>open access</term>
+					<term>open science</term>
+					<term>open data</term>
+					<term>open source</term>
+				</keywords>
+			</textClass>
+			<abstract>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p><s coords="2,123.77,302.70,378.29,7.92;2,109.95,313.66,32.69,7.92">Many countries and institutions are striving to develop tools to monitor their open science policies.</s><s coords="2,149.07,313.66,352.98,7.92;2,109.95,324.62,392.11,7.92;2,109.95,335.57,140.85,7.92">Since 2018, with the launch of its National Plan for Open Science, France has been progressively implementing a monitoring framework for its public policy, relying exclusively on reliable, open, and controlled data.</s></p><p><s coords="2,123.77,346.53,378.29,7.92;2,109.95,357.49,71.59,7.92">Currently, this monitoring focuses on research outputs, particularly publications, as well as theses and clinical trials.</s><s coords="2,185.63,357.49,316.42,7.92;2,109.95,368.45,105.16,7.92">Publications serve as a basis for analyzing other dimensions, including research data, code, and software.</s><s coords="2,221.24,368.45,281.16,7.92;2,109.71,379.41,291.38,7.92">The metadata associated with publications is therefore particularly valuable, but the methodology for leveraging it raises several challenges.</s></p><p><s coords="2,123.77,390.37,378.29,7.92;2,109.95,401.33,35.09,7.92">Here, we briefly outline how we have used this metadata to construct the French Open Science Monitor.</s></p></div>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<facsimile>
+		<surface n="1" ulx="0.0" uly="0.0" lrx="595.28" lry="841.89"/>
+		<surface n="2" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="3" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="4" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="5" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="6" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+		<surface n="7" ulx="0.0" uly="0.0" lrx="612.0" lry="792.0"/>
+	</facsimile>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><p><s coords="2,84.68,497.10,270.16,9.96">The starting point for these analyses is a corpus of publications.</s><s coords="2,359.10,497.10,167.86,9.96;2,85.04,509.05,158.35,9.96">Defining the appropriate target scope is essential to provide relevant insights.</s><s coords="2,247.81,509.05,279.14,9.96;2,85.04,521.01,441.92,9.96;2,85.04,532.97,87.06,9.96">Details about the metadata required for this corpus are provided in Section 2. In summary, describing this corpus with a PID (Persistent Identifier) and associated metadata is crucial.</s><s coords="2,176.52,532.97,239.03,9.96">The default primary PID should be the Crossref DOI.</s><s coords="2,418.87,532.97,109.47,9.96;2,85.04,544.92,441.92,9.96;2,85.04,556.88,41.87,9.96">Other PIDs can be used, but the methodology and code must be adapted accordingly, particularly for Open Access (OA) status discovery.</s></p><p><s coords="2,84.66,574.81,168.64,9.96">Additional metadata are also required.</s><s coords="2,257.74,574.81,269.22,9.96;2,85.04,586.76,129.05,9.96">A normalized scientific field classification enables the creation of KPIs by scientific domain.</s><s coords="2,218.98,586.76,307.98,9.96;2,85.04,598.72,69.92,9.96">If such metadata are unavailable, they can be inferred using machine learning models.</s><s coords="2,159.41,598.72,287.94,9.96">OpenAlex also provides computed metadata that can be leveraged.</s><s coords="2,451.79,598.72,75.17,9.96;2,85.04,610.67,442.19,9.96;2,85.04,622.63,332.14,9.96">Metadata such as publishers, repositories, journals, affiliations, and publication types can support further analyses, but they must be normalized to ensure that the insights derived are meaningful.</s></p><p><s coords="2,85.04,640.56,441.92,9.96;2,85.04,652.52,161.37,9.96">Depending on the context, the corpus can be extracted from CRIS systems, global databases (such as OpenAlex), or even custom-built.</s><s coords="2,251.05,652.52,276.12,9.96;2,85.04,664.47,441.93,9.96;2,85.04,676.43,368.66,9.96">The French Open Science Monitor (OSM) opted for the latter approach, combining open data from Crossref, PubMed, open repositories, web crawling, and bottom-up data contributions from French institutions that wish to develop their own OSM.</s><s coords="2,457.73,676.43,69.22,9.96;2,85.04,688.38,441.92,9.96;3,85.04,87.53,287.32,9.96">For global data sources, country affiliation is determined based on harvested (or crawled) raw affiliation strings using the affiliation matcher detailed in (L'Hôte and Jeangirard 2021).</s><s coords="3,377.05,87.53,149.91,9.96;3,85.04,99.49,62.02,9.96;3,356.12,99.49,4.45,9.96">The code and a Docker image are available here: <ref type="url" coords="3,151.48,99.49,204.64,9.96" target="https://github.com/dataesr/affiliation-matcher">https://github.com/dataesr/affiliation-matcher</ref>.</s></p><p><s coords="3,85.04,117.42,337.25,9.96">For Open Access publication KPIs, an OA status discovery tool is required.</s><s coords="3,427.05,117.42,99.91,9.96;3,85.04,129.37,172.91,9.96">By default, Unpaywall provides information for Crossref DOIs.</s></p><p><s coords="3,85.04,147.31,441.92,9.96;3,85.04,159.26,200.15,9.96">For indicators related to datasets and software, in addition to the metadata corpus, the full texts of publications in PDF format are also required.</s><s coords="3,289.62,159.26,237.34,9.96;3,85.04,171.22,129.43,9.96">Text and Data Mining (TDM) techniques can then be applied to compute the KPIs.</s></p><p><s coords="3,85.04,189.15,441.92,9.96;3,85.04,201.10,49.78,9.96">Warning: To achieve the best possible results, it is essential to download as many full-text publications as possible.</s><s coords="3,139.24,201.10,387.72,9.96;3,85.04,213.06,242.62,9.96">In the European context, this is feasible under the framework of the European directive allowing text and data mining for research purposes<ref type="foot" coords="3,320.37,212.11,3.97,6.16" target="#foot_0">foot_0</ref> .</s><s coords="3,333.94,213.06,193.01,9.96;3,85.04,225.01,401.65,9.96">It is necessary to have lawful access to the downloaded content if it is not already openly accessible, for instance, via a subscription.</s><s coords="3,492.46,225.01,34.50,9.96;3,85.04,236.97,303.12,9.96">Outside the European Union, the legal framework must be carefully reviewed.</s><s coords="3,392.59,236.97,134.37,9.96;3,85.04,248.93,104.22,9.96">This note does not address the context beyond Europe.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2" coords="3,85.04,276.11,178.67,10.50">Open source software used</head><p><s coords="3,84.68,295.20,333.65,9.96">The French Monitor code is freely available under open license (MIT License).</s><s coords="3,422.69,295.20,104.27,9.96;3,85.04,307.16,442.19,9.96;3,85.04,319.11,167.35,9.96">It is modular as detailed in the infrastructure section in <ref type="bibr" coords="3,228.29,307.16,88.23,9.96" target="#b1">(Bracco et al. 2022</ref>) (for OA to publications) and in <ref type="bibr" coords="3,473.42,307.16,53.81,9.96;3,85.04,319.11,35.70,9.96" target="#b0">(Bassinet et al. 2023</ref>) (for datasets and software).</s><s coords="3,257.94,319.11,269.02,9.96;3,83.87,331.07,443.08,9.96;3,83.87,343.02,443.09,9.96;3,85.04,354.98,38.58,9.96">However, it is closely linked to our data acquisition pipeline (web crawling, bottom data collection from French institutions, extension to cover French specific PID (HAL)) and to the data architecture we built on the OVH public cloud -S3 Object Storage used by the Ministry.</s><s coords="3,128.05,354.98,122.57,9.96">Also, Python has been used.</s><s coords="3,255.05,354.98,271.91,9.96;3,84.68,366.93,253.27,9.96">If it is to be implemented in another country, parts of the code will have to be rewritten to match the local requirements.</s><s coords="3,342.39,366.93,184.77,9.96;3,85.04,378.89,176.34,9.96">The core monitor code also relies on other free and open source services / software:</s></p><p><s coords="3,97.22,396.82,429.74,9.96;3,109.95,408.78,242.33,9.96">• Open access discovery tool (as explained above): Unpaywall The premium service of Unpaywall is used to get a quarterly full snapshot of the database.</s><s coords="3,356.72,408.78,170.25,9.96;3,109.95,420.73,308.29,9.96">These snapshots are used to historicize the OA status of each publication, useful to analyse the OA dynamics.</s></p><p><s coords="3,97.22,438.66,411.80,9.96">• A Text and Data Mining (TDM) tool to detect research datasets mentions from the full-text.</s><s coords="3,513.41,438.66,13.54,9.96;3,109.95,450.62,183.32,9.96">We use DataStet from the Docker image 0.8.0</s></p><p><s coords="3,97.22,468.55,431.67,9.96">• A Text and Data Mining (TDM) tool to detect code and software mentions from the full-text.</s><s coords="3,109.44,480.51,194.24,9.96">We use Softcite from the Docker image 0.8.0</s></p><p><s coords="3,97.22,498.44,431.67,9.96">• A smart scholarly PDF parsing tool to structure metadata and the full-text content from a PDF.</s></p><p><s coords="3,109.44,510.40,202.60,9.96">We use GROBID from the Docker image 0.8.0.</s><s coords="3,316.47,510.40,210.75,9.96;3,109.95,522.35,171.14,9.96">Later versions (from 0.8.1) include fixes on grant ids detection that can be very relevant.</s></p><p><s coords="3,84.53,540.28,402.91,9.96">We also developed extra modules that glues together and orchestrates all the previous tools:</s></p><p><s coords="3,97.22,558.22,429.74,9.96;3,109.95,570.17,417.01,9.96;3,109.95,582.13,24.82,9.96">• The module bso3-analyse-publications implements in Python the whole TDM pipeline, and also the analysis funnel analysis at the document level of the resulting outputs to get publication-wise KPIs.</s></p><p><s coords="3,97.22,600.06,429.75,9.96;3,109.95,612.01,292.10,9.96">• The module bso-publications implements in python an extract-transform-load process and stores the final results, at the publication level, in an Elasticsearch index.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.3" coords="4,85.04,86.82,201.09,10.50">Computation power consumed</head><p><s coords="4,84.53,105.92,283.57,9.96">We deploy our code on a public cloud infrastructure, by OVH.</s><s coords="4,372.00,105.92,154.96,9.96;4,85.04,117.87,168.35,9.96">We use their managed Kubernetes service, using multiple nodes (servers):</s></p><p><s coords="4,97.22,135.81,429.74,9.96;4,109.95,147.76,348.61,9.96">• 1 large server (16 CPU 240Go RAM) is used to host the metadata Mongo databases (Unpaywall snapshots, French corpus metadata) and run most of the OA KPIs calculations.</s></p><p><s coords="4,97.22,165.70,430.02,9.96;4,108.78,177.65,418.17,9.96;4,109.70,189.61,51.68,9.96">• 6 smaller servers are used for data acquisition (crawling, parsing, harvesting) and enrichment (language detection, discipline inference, tasks monitoring . . . ) (4 CPU 15Go RAM and 2 CPU 7Go RAM).</s></p><p><s coords="4,97.22,207.54,292.97,9.96">• 1 medium server (4 CPU 60Go RAM) used to harvest the PDF.</s></p><p><s coords="4,97.22,225.47,269.78,9.96">• 5 servers (32 CPU 120Go RAM) to run the TDM analysis.</s></p><p><s coords="4,97.22,243.40,344.86,9.96;4,486.44,243.40,32.16,9.96">• 3 servers (with redundancy) (16 CPU 60Go RAM) to host the Elasticsearch indices.</s></p><p><s coords="4,97.22,261.34,356.48,9.96">• 6 servers (with redundancy + staging/prod) (2 CPU 7Go) to host the website.</s></p><p><s coords="4,84.68,279.27,442.27,9.96;4,83.87,291.22,260.35,9.96">This infrastructure is also used for other projects, so 100% cannot be affected to the OS monitoring (in particular the Elasticsearch and websites hosting part).</s><s coords="4,348.68,291.22,178.29,9.96;4,85.04,303.18,142.46,9.96">However, the PDF harvesting and TDM analysis are a very specific need.</s><s coords="4,231.92,303.18,295.30,9.96;4,85.04,315.14,90.88,9.96">For this specific need, around 20k euros were spent to analyse 700k PDFs in one month.</s><s coords="4,181.73,315.14,345.22,9.96;4,85.04,327.09,50.40,9.96">The rest of the infrastructure is around 70k a year, but is not specific to OS monitoring.</s><s coords="4,139.86,327.09,306.25,9.96">Relying on other services (like OpenAlex) could help reduce the costs.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.4" coords="4,85.04,354.27,182.55,10.50">Team and human resources</head><p><s coords="4,84.66,373.37,444.24,9.96">A deep understanding of the Open science / scholarly communications area is key to make it happen.</s><s coords="4,85.04,385.32,441.92,9.96;4,84.68,397.28,223.11,9.96">Random software engineers do not have this knowledge and it may take time for them to understand what is at stake for the monitoring to be relevant.</s><s coords="4,312.37,397.28,214.59,9.96;4,84.68,409.23,142.48,9.96">Building the whole pipeline can be implemented with about 2 FTE for 6 months.</s><s coords="4,231.59,409.23,295.37,9.96;4,85.04,421.19,238.75,9.96">An extra FTE (project manager or so) can be needed to make sure software developments are inline with the project goals.</s><s coords="4,328.24,421.19,198.73,9.96;4,84.78,433.14,20.85,9.96">Maintenance costs are lower, about 0.5 FTE a year.</s><s coords="4,110.06,433.14,418.07,9.96;4,85.04,445.10,364.33,9.96">However, things evoles fast and new features (new objects to monitor, new types of analysis . . . ) are generally necessary so a maintenance only scenario is not very likely to happen.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2." coords="4,85.04,475.70,278.21,12.60;4,85.04,501.15,115.64,10.50">A few methodological considerations 2.1 Corpus creation</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.1" coords="4,85.04,520.76,131.68,8.90">Defining a perimeter</head><p><s coords="4,85.04,538.64,410.27,9.96">Research outputs can be indexed in large databases (Crossref, Datacite, OpenAlex), or not.</s><s coords="4,500.52,538.64,26.44,9.96;4,85.04,550.59,442.12,9.96;4,85.04,562.55,167.12,9.96">It can be necessary to put in place specific harvesters to get metadata from other places (disciplinary or institutional repositories for example).</s></p><p><s coords="4,85.04,580.48,441.92,9.96;4,85.04,592.43,173.43,9.96">Making sure these extra data are correctly ingested with the data coming from the large database is a challenge (data format, no duplicates . . .</s><s coords="4,260.13,592.43,6.51,9.96">).</s><s coords="4,271.04,592.43,256.20,9.96;4,85.04,604.39,443.76,9.96">An option could be to make those extra research outputs fit into one of these databases: adding DOI for example, or asking OpenAlex to harvest extra repositories.</s></p><p><s coords="4,84.66,622.32,442.30,9.96;4,85.04,634.28,442.12,9.96;4,85.04,646.23,242.73,9.96">Also, about the distinction between types of publication, for example, the distinction with professional articles: it all depends on the available data, of course, but also the main point to define the perimeter is to know upfront what is the goal of the monitoring.</s><s coords="4,333.10,646.23,193.87,9.96;4,85.04,658.19,341.94,9.96">If it is to steer and analyze the impact of a public policy, then the perimeter has to be in line with the public policy itself.</s><s coords="4,431.42,658.19,95.81,9.96;4,85.04,670.14,223.26,9.96">That may be different from one national/institutional situation to another.</s><s coords="4,312.67,670.14,214.29,9.96;4,85.04,682.10,409.94,9.96">That is also why, in France, we propose a national monitoring, but also "local" monitoring in which the perimeter can be customed by the users.</s></p><p><s coords="6,85.04,87.53,339.75,9.96">OpenAlex now) already implements that logic, at least for all Crossref DOI.</s><s coords="6,428.26,87.53,98.70,9.96;6,83.87,99.49,413.05,9.96">For other publications (with no Crossref DOI), open access discovery is not that easy and depends on local specificities.</s><s coords="6,501.30,99.49,25.65,9.96;6,85.04,111.44,442.12,9.96;6,85.04,123.40,244.95,9.96">In the future, we could expect that, if those publications are in OpenAlex, they also benefit from a better open access discovery service just like with Unpaywall.</s><s coords="6,335.29,123.40,191.67,9.96;6,85.04,135.35,411.52,9.96">Also, it is important to note that the open access status is not a fixed metadata (contrary to the title or the list of authors for instance).</s><s coords="6,501.01,135.35,25.95,9.96;6,85.04,147.31,73.36,9.96">It can evolve over time.</s><s coords="6,162.83,147.31,265.78,9.96">More details on this aspect are given in <ref type="bibr" coords="6,338.51,147.31,85.67,9.96" target="#b1">(Bracco et al. 2022)</ref>.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.3" coords="6,85.04,173.71,121.37,8.90">Open Access types</head><p><s coords="6,85.04,191.59,382.52,9.96">In the French Open Science Monitor, we analyze in different ways the type of open access.</s><s coords="6,471.88,191.59,56.47,9.96">In particular,</s></p><p><s coords="6,97.22,209.52,386.30,9.96">• is it opened via the publisher or via a repository (or both?) -regardless of the license</s></p><p><s coords="6,97.22,227.46,326.69,9.96">• if it is opened via the publisher, what kind of business model is it used?</s></p><p><s coords="6,97.22,245.39,343.49,9.96">• if it is opened via the publisher, is there any proper license, and which one?</s></p><p><s coords="6,85.04,263.32,219.82,9.96">More details are described in <ref type="bibr" coords="6,214.75,263.32,81.25,9.96" target="#b1">(Bracco et al. 2022</ref>).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.4" coords="6,85.04,289.73,108.22,8.90">APC estimation</head><p><s coords="6,85.04,307.61,279.44,9.96">Estimating Article Processing Charge (APC) is not an easy task.</s><s coords="6,368.91,307.61,158.05,9.96;6,85.04,319.56,443.86,9.96">In the French OSM, we implemented an article level estimation, based on the data from DOAJ and OpenAPC (cf <ref type="bibr" coords="6,431.74,319.56,88.28,9.96" target="#b1">(Bracco et al. 2022)</ref>).</s></p><p><s coords="6,85.04,331.52,442.29,9.96;6,85.04,343.47,441.92,9.96;6,85.04,355.43,312.42,9.96">In particular, if an article, not present in OpenAPC, is published in a journal that is sufficiently represented in OpenAPC (for the same year of publication), an APC amount is estimated based on the average APC paid for articles published in that journal in the same year.</s><s coords="6,401.85,355.43,125.10,9.96;6,85.04,367.38,192.97,9.96">OpenAlex provides also some insights, based in particular on listed APC.</s><s coords="6,281.41,367.38,247.49,9.96">However, two main difficulties are difficult to overcome.</s><s coords="6,85.04,379.34,443.86,9.96">First, when an article is in collaboration, it is very difficult to know which institution has actually paid.</s><s coords="6,84.68,391.29,442.48,9.96;6,85.04,403.25,104.13,9.96">The institution of the corresponding author is probably a good guess, but the corresponding author metadata is hard to get.</s><s coords="6,193.60,403.25,333.37,9.96;6,85.04,415.20,120.77,9.96">Another difficulty comes from the transformative agreements, where APC are negotiated at a larger scale.</s><s coords="6,210.23,415.20,250.56,9.96">The marginal APC per article is then harder to estimate.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3" coords="6,85.04,441.61,218.75,8.90">Dataset and software mention detection</head><p><s coords="6,85.04,459.49,350.96,9.96">Research datasets, software and code are research outputs difficult to monitor.</s><s coords="6,441.03,459.49,86.30,9.96;6,85.04,471.44,443.31,9.96;6,85.04,483.40,191.99,9.96">We explored a very generic technique to analyse those objects: this technique can be applied to any country and discipline, as long as a publication corpus is available.</s><s coords="6,281.55,483.40,245.41,9.96;6,85.04,495.35,443.85,9.96">Publications' full-texts are analyzed with deep learning models to detect all the mentions of data / datasets, and also all the mentions of software and code.</s><s coords="6,84.68,507.31,442.27,9.96;6,85.04,519.26,37.61,9.96">Those mentions are then caracterized in context, that means they are classified according to the type of mention.</s><s coords="6,127.08,519.26,359.73,9.96">In the model we use, each mention can be a mention of usage, creation, or sharing.</s><s coords="6,491.25,519.26,35.72,9.96;6,85.04,531.22,442.12,9.96;6,85.04,543.18,259.18,9.96">Once all the mentions detected are caracterized, document-level indicators are computed, to calculate whether a publication does use / create / share data or software.</s><s coords="6,351.47,543.18,175.48,9.96;6,85.04,555.13,443.08,9.96;6,85.04,567.09,443.86,9.96;6,84.79,579.04,26.57,9.96">Eventually, the French OSM computes national-level indiators, with the percentage of publication that mentions sharing data (/ software) amongst the publications that indicates using and producing data (/ software), see <ref type="bibr" coords="6,461.15,567.09,67.75,9.96;6,84.79,579.04,22.14,9.96" target="#b0">(Bassinet et al. 2023)</ref>.</s></p><p><s coords="6,84.68,596.97,296.97,9.96">The detection models (Softcite and Datastet) can be improved for sure.</s><s coords="6,385.74,596.97,78.33,9.96">The works-magnet <ref type="url" coords="6,466.40,596.97,62.23,9.96;6,85.04,608.93,83.64,9.96" target="https://works-magnet.esr.gouv.fr/">https://works- magnet.esr.gouv.fr/</ref></s><s coords="6,171.25,608.93,357.64,9.96">provides a module to explore and correct the mentions detected in the French corpus.</s><s coords="6,84.53,620.88,442.43,9.96;6,85.04,632.84,319.57,9.96">We hope to collect enough good quality curated data to build an extended training dataset and then more accurate machine learning models for dataset and software detection.</s><s coords="6,408.98,632.84,117.98,9.96;6,85.04,644.79,358.52,9.96">We are convinced setting in place quick human feedback loop with increase the accuracy of the detection models.</s><s coords="6,447.84,644.79,79.13,9.96;6,85.04,656.75,442.19,9.96;6,85.04,668.70,78.73,9.96">Works-magnet like tools enable that kind of interactions and could be integrated in different pipelines, like on manuscript deposit platforms.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3." coords="7,85.04,85.19,202.07,12.60">A few advices and impact</head><p><s coords="7,85.04,109.35,441.92,9.96;7,85.04,121.31,297.57,9.96">Having an objective and quantitative tool for monitoring, easy to plug, which makes it easier for funders and institutions to communicate and steer their open science policy.</s><s coords="7,387.07,121.31,140.26,9.96;7,85.04,133.26,366.63,9.96">Having a tool that can be easily adapted to different contexts like funders or institutions is then a key component.</s><s coords="7,456.96,133.26,70.00,9.96;7,85.04,145.22,338.45,9.96">However, a tool remains a tool and is only complementary to the local policies and mandates.</s></p><p><s coords="7,85.04,163.15,370.16,9.96">Some tips also can help in building a reliable and effective Open Science Monitoring.</s></p><p><s coords="7,97.22,181.08,429.74,9.96;7,109.95,193.04,24.91,9.96">• Clean up OpenAlex affiliations to obtain a reliable corpus of publications (the works-magnet can help).</s></p><p><s coords="7,97.22,210.97,277.20,9.96">• Maintaining its own infrastructure is costly (money and HR).</s><s coords="7,377.74,210.97,149.23,9.96;7,109.95,222.93,323.37,9.96">A call to open infrastructure could help reduce the costs and invest in a shared infrastructure / methodology.</s></p><p><s coords="7,97.22,240.86,429.74,9.96;7,109.95,252.81,418.95,9.96">• If a national dashboard cannot be created, it is already possible to obtain useful indicators on open access publications directly via COKI (see (Diprose 2023)), as it is based on OpenAlex data.</s><s coords="7,97.22,270.75,431.41,9.96;7,109.95,282.70,418.95,9.96">• In the event of legal and/or economic difficulties in accessing non-open access content, a downgraded version of the result based solely on open access full text and under CC licence is possible.</s></p></div>			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" n="1" xml:id="foot_0" coords="3,100.28,631.52,54.91,7.04"><p><s coords="3,100.28,631.52,54.91,7.04">Directive (EU)</s></p></note>
+			<note xmlns="http://www.tei-c.org/ns/1.0" place="foot" xml:id="foot_1" coords="3,158.03,631.52,368.93,7.04;3,85.04,640.99,442.84,7.04;3,85.04,650.45,166.86,7.04"><p><s coords="3,158.03,631.52,368.93,7.04;3,85.04,640.99,442.84,7.04;3,85.04,650.45,166.86,7.04">2019/790 of the European Parliament and of the Council of 17 April 2019 on copyright and related rights in the Digital Single Market and amending Directives 96/9/EC and 2001/29/EC https://eur-lex.europa.eu/legalcontent/EN/TXT/?uri=CELEX:32019L0790</s></p></note>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.2" coords="5,85.04,88.04,127.26,8.90">Handling duplicates</head><p><s coords="5,85.04,105.92,175.48,9.96">Detecting duplicates can be challenging.</s><s coords="5,264.95,105.92,262.01,9.96;5,85.04,117.87,441.92,9.96;5,85.04,129.83,253.75,9.96">For publications with a Crossref DOI, this PID is in general enough, even though, for some cases, preprints and published versions sometimes have a Crossref DOI each and could be considered as only one research output.</s></p><p><s coords="5,85.04,147.76,269.75,9.96">For works from Datacite, that can be much more complicated.</s><s coords="5,359.21,147.76,169.42,9.96;5,85.04,159.72,212.45,9.96">The Datacite API has a field "relatedIdentifiers" that can be used to detect duplicates.</s></p><p><s coords="5,85.04,177.65,271.12,9.96">In the example from OpenAlex one can see from the datacite API <ref type="url" coords="5,358.38,177.65,230.66,9.96" target="https://api.datacite.org/dois/10.5281/zenodo.8042997">https://api.datacite.org/dois/10.5281/zenodo.8042997</ref></s><s coords="5,85.04,189.61,154.55,9.96">that this DOI has several versions.</s><s coords="5,244.52,189.61,282.44,9.96;5,85.04,201.56,72.08,9.96">However that may not be enough and some heuristics based on title, authors . . .</s><s coords="5,163.21,201.56,364.02,9.96;5,85.04,213.52,47.48,9.96">or even more complicated processes (machine learning etc) could be used to detect duplicates.</s><s coords="5,137.13,213.52,390.09,9.96;5,85.04,225.47,137.88,9.96">The same goes for publications from other systems (open repositories for example) that may contain a lot of duplicates.</s><s coords="5,84.66,243.40,444.23,9.96">Also, during the deduplication phase, duplicate records may have to be merged into one single record.</s><s coords="5,84.68,255.36,274.30,9.96">The list of affiliations, keywords, and authors can be different.</s><s coords="5,363.41,255.36,165.49,9.96">Merging strategies have to be settled.</s><s coords="5,85.04,267.31,441.92,9.96;5,83.87,279.27,145.14,9.96">In the French case, for key elements, Crossref data have the top priority, followed by the other sources (web scraping, PubMed, HAL, . . .</s><s coords="5,230.68,279.27,6.51,9.96">).</s><s coords="5,241.58,279.27,285.38,9.96;5,85.04,291.22,430.88,9.96">For some metadata that are of type list, it is possible to enrich the final metadata with all the metadata coming from each source (affiliations, keywords for example).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.3" coords="5,85.04,317.63,220.21,8.90">Author disambiguation and affiliations</head><p><s coords="5,85.04,335.51,441.93,9.96;5,85.04,347.47,140.14,9.96">Grobid can help to get authors' PID (like ORCID) or raw affiliation strings and PID (like ROR) when they are present in the full text.</s><s coords="5,229.61,347.47,296.17,9.96">However other sources have to be considered to get better coverage.</s></p><p><s coords="5,84.66,365.40,442.49,9.96;5,85.04,377.35,97.17,9.96">Affiliations can be harvested from the landing pages in many cases (from HTML Highwire header or from HTML parsing).</s><s coords="5,186.97,377.35,206.28,9.96">That is one the techniques used by OpenAlex.</s><s coords="5,398.01,377.35,128.95,9.96;5,85.04,389.31,441.93,9.96;5,84.78,401.26,78.29,9.96">Aligning those raw affiliation strings to ROR is another step where heuristics or machine learning can be helpful (see (L'Hôte and Jeangirard 2021)).</s><s coords="5,167.47,401.26,81.69,9.96">The Works-magnet <ref type="url" coords="5,252.41,401.26,145.87,9.96" target="https://works-magnet.esr.gouv.fr/">https://works-magnet.esr.gouv.fr/</ref></s><s coords="5,401.52,401.26,125.44,9.96;5,85.04,413.22,407.47,9.96">(see <ref type="bibr" coords="5,421.09,401.26,105.87,9.96;5,85.04,413.22,54.57,9.96" target="#b4">(Jeangirard, Bracco, and L'Hôte 2024)</ref>) is a tool designed to help improve this matching done automatically in OpenAlex.</s><s coords="5,496.77,413.22,30.39,9.96;5,85.04,425.17,375.47,9.96">Author disambiguation is not an easy task either as the majority of authors have no ORCID at all.</s><s coords="5,464.60,425.17,62.36,9.96;5,85.04,437.13,90.91,9.96">OpenAlex uses clustering techniques <ref type="url" coords="5,179.27,437.13,343.15,9.96" target="https://github.com/ourresearch/openalex-name-disambiguation/tree/main/V3">https://github.com/ourresearch/openalex-name-disambiguation/tree/main/V3</ref></s></p><p><s coords="5,85.04,455.06,289.43,9.96;5,469.16,455.06,4.51,9.96">In the French case, we benefit from a large registry of persons (<ref type="url" coords="5,374.47,455.06,94.69,9.96" target="https://www.idref.fr/">https://www.idref.fr/</ref>)</s><s coords="5,477.55,455.06,49.41,9.96;5,85.04,467.02,45.49,9.96">maintained by ABES.</s><s coords="5,135.09,467.02,356.03,9.96">This registry has quite a good coverage of the researchers working in France.</s><s coords="5,499.27,467.02,29.08,9.96;5,85.04,478.97,442.29,9.96;5,85.04,490.93,24.79,9.96">Again, clustering techniques can be used to disambiguate author name with a PID, but a good person registry helps.</s><s coords="5,114.30,490.93,279.00,9.96;5,85.04,502.88,350.74,9.96">These techniques are used in the French research portal scanR (<ref type="url" coords="5,393.30,490.93,135.33,9.96" target="https://scanr.enseignementsup-">https://scanr.enseignementsup-</ref>recherche.gouv.fr/) to add PID (namely idref ID) to the authors of publications.</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2" coords="5,85.04,530.06,133.93,10.50">Corpus enrichment</head><p><s coords="5,85.04,549.16,443.86,9.96">Once the publication corpus is defined, many enrichment are necessary to add dimensions to analyse.</s><s coords="5,84.68,561.12,442.28,9.96;5,85.04,573.07,135.43,9.96">The use of machine-learning techniques can help a lot, but additional care is required to verify the results (see <ref type="bibr" coords="5,136.70,573.07,70.72,9.96" target="#b5">(Jeangirard 2022</ref>)).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.1" coords="5,85.04,599.47,143.12,8.90">Discipline classification</head><p><s coords="5,85.04,617.36,238.83,9.96">Different algorithms based on title, ISSN, authors etc . . .</s><s coords="5,329.75,617.36,150.67,9.96">can be used to classify publications.</s><s coords="5,484.64,617.36,42.58,9.96;5,85.04,629.31,78.35,9.96">OpenAlex implements some.</s><s coords="5,167.81,629.31,359.39,9.96;5,85.04,641.27,174.37,9.96">The French Open Science Monitoring uses its own to classify publications into 10 macro-categories (cf (Jeangirard 2019)).</s></p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.2" coords="5,85.04,667.67,141.05,8.90">Open Access discovery</head><p><s coords="5,84.68,685.55,442.54,9.96;5,85.04,697.51,369.11,9.96">The Open Access status information is generally not retrieved with Grobid (publication parser), but instead using information from the landing page (HTML parser) or from repositories.</s><s coords="5,458.57,697.51,68.39,9.96">Unpaywall (and</s></p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct coords="7,85.04,337.47,443.85,9.96;7,99.73,349.42,427.22,9.96;7,99.98,361.38,387.34,9.96" xml:id="b0">
+	<monogr>
+		<title level="m" type="main" coords="7,131.17,349.42,395.79,9.96;7,99.98,361.38,228.05,9.96">Large-scale Machine-Learning analysis of scientific PDF for monitoring the production and the openness of research data and software in France</title>
+		<author>
+			<persName coords=""><forename type="first">Aricia</forename><surname>Bassinet</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Laetitia</forename><surname>Bracco</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Anne L'</forename><surname>Hôte</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Eric</forename><surname>Jeangirard</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Patrice</forename><surname>Lopez</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Laurent</forename><surname>Romary</surname></persName>
+		</author>
+		<ptr target="https://hal.science/hal-04121339"/>
+		<imprint>
+			<date type="published" when="2023">2023</date>
+		</imprint>
+	</monogr>
+	<note type="raw_reference">Bassinet, Aricia, Laetitia Bracco, Anne L'Hôte, Eric Jeangirard, Patrice Lopez, and Laurent Romary. 2023. "Large-scale Machine-Learning analysis of scientific PDF for monitoring the production and the openness of research data and software in France." https://hal.science/hal-04121339.</note>
+</biblStruct>
+
+<biblStruct coords="7,85.04,379.31,441.92,9.96;7,99.98,391.27,272.94,9.96" xml:id="b1">
+	<monogr>
+		<title level="m" type="main" coords="7,436.93,379.31,90.03,9.96;7,99.98,391.27,114.39,9.96">Extending the open monitoring of open science</title>
+		<author>
+			<persName coords=""><forename type="first">Laetitia</forename><surname>Bracco</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Anne</forename><forename type="middle">L</forename><surname>'hôte</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Eric</forename><surname>Jeangirard</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Didier</forename><surname>Torny</surname></persName>
+		</author>
+		<ptr target="https://hal.science/hal-03651518"/>
+		<imprint>
+			<date type="published" when="2022">2022</date>
+		</imprint>
+	</monogr>
+	<note type="raw_reference">Bracco, Laetitia, Anne L'Hôte, Eric Jeangirard, and Didier Torny. 2022. "Extending the open monitoring of open science." https://hal.science/hal-03651518.</note>
+</biblStruct>
+
+<biblStruct coords="7,85.04,409.20,443.81,9.96;7,98.42,421.15,313.70,9.96" xml:id="b2">
+	<analytic>
+		<title level="a" type="main" coords="7,216.62,409.20,303.10,9.96">A User-Friendly Dashboard for Tracking Global Open Access Performance</title>
+		<author>
+			<persName coords=""><forename type="first">James</forename><forename type="middle">P</forename><surname>Diprose</surname></persName>
+			<idno type="ORCID">0000-0002-5094-3571</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Hosking</surname></persName>
+			<idno type="ORCID">0000-0001-8288-5241</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Richard</forename><surname>Rigoni</surname></persName>
+		</author>
+		<author>
+			<persName><forename type="first">Aniek</forename><surname>Roelofs</surname></persName>
+			<idno type="ORCID">0000-0003-0485-3388</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Tuan-Yow</forename><surname>Chien</surname></persName>
+			<idno type="ORCID">0000-0002-6237-7423</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Kathryn</forename><surname>Napier</surname></persName>
+			<idno type="ORCID">0000-0003-1202-7238</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Katie</forename><surname>Wilson</surname></persName>
+			<idno type="ORCID">0000-0001-8705-1027</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Chun-Kai (karl)</forename><surname>Huang</surname></persName>
+			<idno type="ORCID">0000-0002-9656-5932</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Rebecca</forename><forename type="middle">N</forename><surname>Handcock</surname></persName>
+			<idno type="ORCID">0000-0001-5903-6620</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Lucy</forename><surname>Montgomery</surname></persName>
+			<idno type="ORCID">0000-0001-6551-8140</idno>
+		</author>
+		<author>
+			<persName><forename type="first">Cameron</forename><surname>Neylon</surname></persName>
+			<idno type="ORCID">0000-0002-0068-716X</idno>
+		</author>
+		<idno type="DOI">10.3998/jep.3398</idno>
+		<ptr target="https://doi.org/10.3998/jep.3398"/>
+	</analytic>
+	<monogr>
+		<title level="j">The Journal of Electronic Publishing</title>
+		<idno type="ISSNe">1080-2711</idno>
+		<imprint>
+			<biblScope unit="volume">26</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2023-05-10">2023</date>
+			<publisher>University of Michigan Library</publisher>
+		</imprint>
+	</monogr>
+	<note type="raw_reference">Diprose, Hosking, J. P. 2023. "User-Friendly Dashboard for Tracking Global Open Access Performance." The Journal of Electronic Publishing. https://doi.org/10.3998/jep.3398.</note>
+</biblStruct>
+
+<biblStruct coords="7,84.78,439.09,441.90,9.96;7,99.32,451.04,427.89,9.96;7,99.98,463.00,143.41,9.96" xml:id="b3">
+	<analytic>
+		<title level="a" type="main" coords="7,182.93,439.09,283.14,9.96">Monitoring Open Access at a national level: French case study</title>
+		<author>
+			<persName coords=""><forename type="first">Eric</forename><surname>Jeangirard</surname></persName>
+		</author>
+		<idno type="DOI">10.4000/proceedings.elpub.2019.20</idno>
+		<ptr target="https://doi.org/10.4000/proceedings.elpub"/>
+	</analytic>
+	<monogr>
+		<title level="m" coords="7,492.05,439.69,34.63,8.80;7,99.32,451.65,253.41,8.80">ELPUB 2019 23d International Conference on Electronic Publishing</title>
+		<imprint>
+			<publisher>OpenEdition Press</publisher>
+			<date type="published" when="1920">2019. 2019.20</date>
+		</imprint>
+	</monogr>
+	<note type="raw_reference">Jeangirard, E. 2019. "Monitoring Open Access at a National Level: French Case Study." In ELPUB 2019 23d International Conference on Electronic Publishing. OpenEdition Press. https://doi.org/10 .4000/proceedings.elpub.2019.20.</note>
+</biblStruct>
+
+<biblStruct coords="7,84.78,480.93,442.43,9.96;7,99.98,492.88,372.19,9.96" xml:id="b4">
+	<analytic>
+		<title level="a" type="main" coords="7,345.63,480.93,181.59,9.96;7,99.98,492.88,55.34,9.96">Works-magnet : aucune de perdue, 10 000 de retrouvées</title>
+		<author>
+			<persName coords=""><forename type="first">Eric</forename><surname>Jeangirard</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Laetitia</forename><surname>Bracco</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Anne L'</forename><surname>Hôte</surname></persName>
+		</author>
+		<idno type="DOI">10.5281/zenodo.11471247</idno>
+		<ptr target="https://doi.org/10.5281/zenodo.11471247"/>
+	</analytic>
+	<monogr>
+		<title level="m" coords="7,168.17,492.88,112.02,9.96">Abes; Journées Abes 2024</title>
+		<imprint>
+			<date type="published" when="2024">2024</date>
+		</imprint>
+	</monogr>
+	<note type="raw_reference">Jeangirard, Eric, Laetitia Bracco, and Anne L'Hôte. 2024. "Works-magnet : aucune de perdue, 10 000 de retrouvées." Abes; Journées Abes 2024. https://doi.org/10.5281/zenodo.11471247.</note>
+</biblStruct>
+
+<biblStruct coords="7,84.78,510.82,442.18,9.96;7,99.98,522.77,428.36,9.96;7,99.49,534.73,217.94,9.96" xml:id="b5">
+	<analytic>
+		<title level="a" type="main" coords="7,193.59,510.82,333.37,9.96;7,99.98,522.77,270.74,9.96">L’utilisation de l’apprentissage automatique dans le Baromètre de la science ouverte : une façon de réconcilier bibliométrie et science ouverte ?</title>
+		<author>
+			<persName coords=""><forename type="first">Éric</forename><surname>Jeangirard</surname></persName>
+		</author>
+		<idno type="DOI">10.35562/arabesques.3084</idno>
+		<ptr target="https://doi.org/10.35562/arabesques.3084"/>
+	</analytic>
+	<monogr>
+		<title level="j" coords="7,386.86,523.38,44.31,8.80">Arabesques</title>
+		<idno type="ISSN">1269-0589</idno>
+		<idno type="ISSNe">2108-7016</idno>
+		<imprint>
+			<biblScope unit="issue">107</biblScope>
+			<biblScope unit="page" from="10" to="11"/>
+			<date type="published" when="2022-09">2022. September</date>
+			<publisher>Universite Jean Moulin Lyon 3</publisher>
+		</imprint>
+	</monogr>
+	<note type="raw_reference">Jeangirard, Éric. 2022. "L'utilisation de l'apprentissage automatique dans le Baromètre de la science ouverte : une façon de réconcilier bibliométrie et science ouverte ?" Arabesques, no. 107 (September): 10-11. https://doi.org/10.35562/arabesques.3084.</note>
+</biblStruct>
+
+<biblStruct coords="7,85.04,552.66,441.92,9.96;7,99.98,564.62,222.83,9.96" xml:id="b6">
+	<monogr>
+		<title level="m" type="main" coords="7,284.31,552.66,242.65,9.96;7,99.98,564.62,63.25,9.96">Using Elasticsearch for entity recognition in affiliation disambiguation</title>
+		<author>
+			<persName coords=""><forename type="first">Anne</forename><surname>L'hôte</surname></persName>
+		</author>
+		<author>
+			<persName coords=""><forename type="first">Eric</forename><surname>Jeangirard</surname></persName>
+		</author>
+		<ptr target="https://hal.science/hal-03365806"/>
+		<imprint>
+			<date type="published" when="2021">2021</date>
+		</imprint>
+	</monogr>
+	<note type="raw_reference">L'Hôte, Anne, and Eric Jeangirard. 2021. "Using Elasticsearch for entity recognition in affiliation disambiguation." https://hal.science/hal-03365806.</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

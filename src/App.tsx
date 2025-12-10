@@ -1,6 +1,6 @@
 import './App.css'
 
-import FileUploader from './file-uploader'
+import FileUploader from './components/FileUploader'
 
 function App() {
 

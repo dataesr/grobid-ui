@@ -1,4 +1,4 @@
-# grobid-ui
+# GrobidUI
 
 Frontend for Grobid https://github.com/kermitt2/grobid.
 
