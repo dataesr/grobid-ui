@@ -76,3 +76,25 @@ export default defineConfig([
   },
 ])
 ```
+
+
+## Stack
+
+Node20
+React19+
+Framework: MaterialUI7
+PDF Viewer: https://github.com/wojtekmaj/react-pdf
+Vite
+
+
+To run it locally: `npm start`
+
+## Inspiration
+
+https://huggingface.co/spaces/lightonai/LightOnOCR-1B-Demo-zero
+
+
+## Current
+
+https://huggingface.co/spaces/lfoppiano/grobid
+https://huggingface.co/spaces/lfoppiano/grobid2
