@@ -113,7 +113,7 @@ const AnnotationLegend: React.FC<AnnotationLegendProps> = ({
               <Typography
                 variant="caption"
                 sx={{
-                  display: 'block',
+                  // display: 'block',
                   color: 'text.secondary',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',

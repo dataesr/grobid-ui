@@ -21,16 +21,16 @@ export function parseGrobidCoordinates(teiXml: string): GrobidAnnotation[] {
   const titleElements = xmlDoc.querySelectorAll('titleStmt title[type="main"]');
   titleElements.forEach((element) => {
     const coords = extractCoordinates(element);
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'title',
           coord,
           element.textContent || ''
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract authors
@@ -39,48 +39,48 @@ export function parseGrobidCoordinates(teiXml: string): GrobidAnnotation[] {
     const coords = extractCoordinates(element);
     const persName = element.querySelector('persName');
     const authorText = persName ? getPersonName(persName) : element.textContent || '';
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'author',
           coord,
           authorText
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract abstract
   const abstractElements = xmlDoc.querySelectorAll('profileDesc abstract div[type="abstract"]');
   abstractElements.forEach((element) => {
     const coords = extractCoordinates(element);
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'abstract',
           coord,
           element.textContent || ''
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract sections (headings)
   const sectionElements = xmlDoc.querySelectorAll('body div head');
   sectionElements.forEach((element) => {
     const coords = extractCoordinates(element);
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'section',
           coord,
           element.textContent || ''
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract references
@@ -88,16 +88,16 @@ export function parseGrobidCoordinates(teiXml: string): GrobidAnnotation[] {
   referenceElements.forEach((element) => {
     const coords = extractCoordinates(element);
     const refText = extractReferenceText(element);
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'reference',
           coord,
           refText
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract figures
@@ -106,16 +106,16 @@ export function parseGrobidCoordinates(teiXml: string): GrobidAnnotation[] {
     const coords = extractCoordinates(element);
     const figHead = element.querySelector('head');
     const figText = figHead ? figHead.textContent || '' : 'Figure';
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'figure',
           coord,
           figText
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract tables
@@ -124,64 +124,64 @@ export function parseGrobidCoordinates(teiXml: string): GrobidAnnotation[] {
     const coords = extractCoordinates(element);
     const tableHead = element.querySelector('head');
     const tableText = tableHead ? tableHead.textContent || '' : 'Table';
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'table',
           coord,
           tableText
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract keywords
   const keywordElements = xmlDoc.querySelectorAll('profileDesc textClass keywords term');
   keywordElements.forEach((element) => {
     const coords = extractCoordinates(element);
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'keyword',
           coord,
           element.textContent || ''
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract affiliations
   const affiliationElements = xmlDoc.querySelectorAll('sourceDesc biblStruct analytic author affiliation');
   affiliationElements.forEach((element) => {
     const coords = extractCoordinates(element);
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'affiliation',
           coord,
           element.textContent || ''
         ));
-      });
-    }
+      }
+    });
   });
 
   // Extract formulas
   const formulaElements = xmlDoc.querySelectorAll('body formula');
   formulaElements.forEach((element) => {
     const coords = extractCoordinates(element);
-    if (coords) {
-      coords.forEach((coord) => {
+    coords.forEach((coord) => {
+      if (coord) {
         annotations.push(createAnnotation(
           `annotation-${annotationId++}`,
           'formula',
           coord,
           element.textContent || ''
         ));
-      });
-    }
+      }
+    });
   });
 
   return annotations;

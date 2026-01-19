@@ -5,7 +5,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 interface AnnotationLayerProps {
   annotations: GrobidAnnotation[];
   viewport: pdfjsLib.PageViewport;
-  scale: number;
+  scale?: number;
   selectedAnnotation: GrobidAnnotation | null;
   onAnnotationClick: (annotation: GrobidAnnotation) => void;
 }
@@ -13,7 +13,7 @@ interface AnnotationLayerProps {
 const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
   annotations,
   viewport,
-  scale,
+  // scale,
   selectedAnnotation,
   onAnnotationClick,
 }) => {

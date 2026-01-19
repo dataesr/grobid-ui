@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Alert, Container, Typography, Paper } from '@mui/material';
+import { Box, Button, Alert, Container, Typography, Paper } from '@mui/material';
 import { CloudUpload, Article } from '@mui/icons-material';
 import PDFAnnotationViewer from './PDFAnnotationViewer';
 import { GrobidAnnotation } from './types';
@@ -10,7 +10,7 @@ import { GrobidAnnotation } from './types';
  */
 const App: React.FC = () => {
   const [pdfUrl, setPdfUrl] = useState<string>('');
-  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [, setPdfFile] = useState<File | null>(null);
   const [grobidTeiXml, setGrobidTeiXml] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');

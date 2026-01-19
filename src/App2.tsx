@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState } from "react";
 
 import {
   AreaHighlight,
@@ -26,8 +26,8 @@ const testHighlights: Record<string, Array<IHighlight>> = _testHighlights;
 
 const getNextId = () => String(Math.random()).slice(2);
 
-const parseIdFromHash = () =>
-  document.location.hash.slice("#highlight-".length);
+// const parseIdFromHash = () =>
+//   document.location.hash.slice("#highlight-".length);
 
 const resetHash = () => {
   document.location.hash = "";
@@ -67,29 +67,30 @@ export function App2() {
     setHighlights(testHighlights[newUrl] ? [...testHighlights[newUrl]] : []);
   };
 
-  const scrollViewerTo = useRef((highlight: IHighlight) => {});
+  // const scrollViewerTo = useRef((highlight: IHighlight) => {});
 
-  const scrollToHighlightFromHash = useCallback(() => {
-    const highlight = getHighlightById(parseIdFromHash());
-    if (highlight) {
-      scrollViewerTo.current(highlight);
-    }
-  }, []);
+  // const getHighlightById = (id: string) => {
+  //   return highlights.find((highlight) => highlight.id === id);
+  // };
 
-  useEffect(() => {
-    window.addEventListener("hashchange", scrollToHighlightFromHash, false);
-    return () => {
-      window.removeEventListener(
-        "hashchange",
-        scrollToHighlightFromHash,
-        false,
-      );
-    };
-  }, [scrollToHighlightFromHash]);
+  // const scrollToHighlightFromHash = useEffect(() => {
+  //   const highlight = getHighlightById(parseIdFromHash());
+  //   if (highlight) {
+  //     // scrollViewerTo.current(highlight);
+  //     highlight.scrollIntoView({behavior: "smooth"})
+  //   }
+  // }, []);
 
-  const getHighlightById = (id: string) => {
-    return highlights.find((highlight) => highlight.id === id);
-  };
+  // useEffect(() => {
+  //   window.addEventListener("hashchange", scrollToHighlightFromHash, false);
+  //   return () => {
+  //     window.removeEventListener(
+  //       "hashchange",
+  //       scrollToHighlightFromHash,
+  //       false,
+  //     );
+  //   };
+  // }, [scrollToHighlightFromHash]);
 
   const addHighlight = (highlight: NewHighlight) => {
     console.log("Saving highlight", highlight);
@@ -145,10 +146,11 @@ export function App2() {
               pdfDocument={pdfDocument}
               enableAreaSelection={(event) => event.altKey}
               onScrollChange={resetHash}
-              scrollRef={(scrollTo) => {
-                scrollViewerTo.current = scrollTo;
-                scrollToHighlightFromHash();
-              }}
+              scrollRef={() => {}
+                // (scrollTo) => {
+              //   scrollViewerTo.current = scrollTo;
+              //   scrollToHighlightFromHash();
+              }
               onSelectionFinished={(
                 position,
                 content,
@@ -198,7 +200,7 @@ export function App2() {
                   <Popup
                     popupContent={<HighlightPopup {...highlight} />}
                     onMouseOver={(popupContent) =>
-                      setTip(highlight, (highlight) => popupContent)
+                      setTip(highlight, () => popupContent)
                     }
                     onMouseOut={hideTip}
                     key={index}
