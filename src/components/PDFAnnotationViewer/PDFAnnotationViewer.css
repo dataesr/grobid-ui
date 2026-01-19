@@ -1,0 +1,136 @@
+.pdf-annotation-viewer {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Annotation rectangle hover effects */
+.annotation-rect:hover {
+  filter: brightness(1.1) url(#glow);
+  stroke-width: 3 !important;
+}
+
+/* Smooth transitions for annotation visibility */
+.annotation-rect {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Canvas container styling */
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Scrollbar styling */
+.pdf-annotation-viewer ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.pdf-annotation-viewer ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.pdf-annotation-viewer ::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.pdf-annotation-viewer ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Loading state */
+.pdf-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #666;
+}
+
+/* Error state */
+.pdf-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: #d32f2f;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Tooltip styling for annotations */
+.annotation-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  max-width: 300px;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pdf-annotation-viewer {
+    font-size: 14px;
+  }
+  
+  .annotation-rect {
+    stroke-width: 1.5 !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .pdf-annotation-viewer {
+    background: white;
+  }
+  
+  /* Hide controls when printing */
+  .pdf-annotation-viewer > div:first-child {
+    display: none;
+  }
+}
+
+/* Accessibility */
+.annotation-rect:focus {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .pdf-annotation-viewer {
+    background-color: #1e1e1e;
+  }
+  
+  .pdf-annotation-viewer ::-webkit-scrollbar-track {
+    background: #2a2a2a;
+  }
+  
+  .pdf-annotation-viewer ::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+  
+  .pdf-annotation-viewer ::-webkit-scrollbar-thumb:hover {
+    background: #777;
+  }
+}

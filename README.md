@@ -83,8 +83,8 @@ export default defineConfig([
 Node20
 React19+
 Framework: MaterialUI7
-PDF Viewer: https://github.com/wojtekmaj/react-pdf
 Vite
+PDF Viewer: https://github.com/wojtekmaj/react-pdf
 
 
 To run it locally: `npm start`
