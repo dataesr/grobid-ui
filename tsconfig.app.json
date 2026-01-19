@@ -25,7 +25,7 @@
     "noUncheckedSideEffectImports": true,
 
     // Misc
-    "assetsInclude": ["**/*.xml"],
+    // "assetsInclude": ["**/*.xml"],
   },
   "include": ["src"]
 }

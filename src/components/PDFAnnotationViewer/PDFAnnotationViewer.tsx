@@ -156,7 +156,7 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
   }, [viewport, scale]);
 
   const handleAnnotationTypeToggle = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newTypes: AnnotationType[]
   ) => {
     setVisibleAnnotationTypes(new Set(newTypes));
