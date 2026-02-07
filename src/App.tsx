@@ -16,6 +16,7 @@ import XMLViewer from 'react-xml-viewer';
 
 import PDFAnnotationViewer from './components/PDFAnnotationViewer/PDFAnnotationViewer';
 import { GrobidAnnotation } from './components/PDFAnnotationViewer/types';
+import pdfUrl2 from './data/how_to_build_open_science_monitor.pdf';
 import markdown2 from './data/how_to_build_open_science_monitor.pdf.md?raw';
 import grobidTeiXml2 from './data/how_to_build_open_science_monitor.pdf.tei.xml?raw';
 
@@ -94,7 +95,7 @@ const App: React.FC = () => {
     console.log('Annotation clicked:', annotation);
   };
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setFormat(newValue);
   };
 
@@ -292,31 +293,6 @@ const App: React.FC = () => {
         </Box>
       </Grid>
       <Grid size={6}>
-        {/* <FormControl component="fieldset">
-          <FormLabel component="legend">Format</FormLabel>
-          <RadioGroup aria-label="format" defaultValue={format} name="row-radio-buttons-group" onChange={(event) => setFormat(event.target.value)} row>
-            <FormControlLabel value="markdown" control={<Radio />} label="Markdown" />
-            <FormControlLabel value="pdf" control={<Radio />} label="PDF" />
-            <FormControlLabel value="xml" control={<Radio />} label="XML TEI" />
-          </RadioGroup>
-        </FormControl>
-        {(format === "pdf") && (
-          <PDFAnnotationViewer
-            pdfUrl={pdfUrl}
-            grobidTeiXml={grobidTeiXml2}
-            initialScale={1}
-          />
-        )}
-        {(format === "xml") && (
-          <div>
-            <XMLViewer xml={grobidTeiXml2} />
-          </div>
-        )}
-        {(format === "markdown") && (
-          <div>
-            <Markdown>{markdown2}</Markdown>
-          </div>
-        )} */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={format} onChange={handleTabChange} aria-label="basic tabs example">
             <Tab label="Markdown" id="tab-markdown" aria-controls="tab-markdown" />
@@ -332,7 +308,7 @@ const App: React.FC = () => {
         </CustomTabPanel>
         <CustomTabPanel value={format} index={2}>
           <PDFAnnotationViewer
-            pdfUrl={pdfUrl}
+            pdfUrl={pdfUrl2}
             grobidTeiXml={grobidTeiXml2}
             initialScale={1}
           />
