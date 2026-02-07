@@ -19,7 +19,7 @@ import { GrobidAnnotation } from './components/PDFAnnotationViewer/types';
 import pdfUrl2 from './data/how_to_build_open_science_monitor.pdf';
 import markdown2 from './data/how_to_build_open_science_monitor.pdf.md?raw';
 import grobidTeiXml2 from './data/how_to_build_open_science_monitor.pdf.tei.xml?raw';
-
+import { teiConverter } from './TEIConverter';
 
 /**
  * Example App demonstrating how to use the PDFAnnotationViewer component
@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const [pdfUrl, setPdfUrl] = useState<string>('');
   const [, setPdfFile] = useState<File | null>(null);
   const [grobidTeiXml, setGrobidTeiXml] = useState<string>('');
+  const [markdown, setMarkdown] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [selectedAnnotation, setSelectedAnnotation] = useState<GrobidAnnotation | null>(null);
@@ -41,8 +42,6 @@ const App: React.FC = () => {
       setPdfFile(file);
       setPdfUrl(URL.createObjectURL(file));
       setError('');
-
-      // Optionally, automatically process with GROBID
       processWithGrobid(file);
     } else {
       setError('Please select a valid PDF file');
@@ -64,23 +63,36 @@ const App: React.FC = () => {
       formData.append('includeRawCitations', '1');
       formData.append('includeRawCopyrights', '1');
       formData.append('segmentSentences', '1');
-      formData.append('teiCoordinates', 'affiliation,biblStruct,figure,formula,head,note,persName,ref,s,title');
+      formData.append('teiCoordinates', 'affiliation');
+      formData.append('teiCoordinates', 'biblStruct');
+      formData.append('teiCoordinates', 'figure');
+      formData.append('teiCoordinates', 'formula');
+      formData.append('teiCoordinates', 'head');
+      formData.append('teiCoordinates', 'note');
+      formData.append('teiCoordinates', 'p');
+      formData.append('teiCoordinates', 'persName');
+      formData.append('teiCoordinates', 'ref');
+      formData.append('teiCoordinates', 's');
+      formData.append('teiCoordinates', 'title');
 
       // Replace with your GROBID server URL
-      // const grobidUrl = 'http://localhost:8070/api/processFulltextDocument';
       const grobidUrl = 'https://lfoppiano-grobid.hf.space/api/processFulltextDocument';
 
       const response = await fetch(grobidUrl, {
         method: 'POST',
         body: formData,
       });
-
       if (!response.ok) {
         throw new Error(`GROBID processing failed: ${response.statusText}`);
       }
 
       const teiXml = await response.text();
+      const result = teiConverter.convert(teiXml);
+      if (!result.success) {
+        throw new Error(`TEI-XML processing failed: ${result.error}`);
+      }
       setGrobidTeiXml(teiXml);
+      setMarkdown(result.markdown);
       setLoading(false);
     } catch (err) {
       console.error('GROBID processing error:', err);
@@ -301,17 +313,33 @@ const App: React.FC = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={format} index={0}>
-          <Markdown>{markdown2}</Markdown>
+          {(markdown?.length ?? 0 > 0) ? (
+            <Markdown>{markdown}</Markdown>
+          ) : (
+            <Markdown>{markdown2}</Markdown>
+          )}
         </CustomTabPanel>
         <CustomTabPanel value={format} index={1}>
-          <XMLViewer xml={grobidTeiXml2} />
+          {(grobidTeiXml?.length ?? 0 > 0) ? (
+            <XMLViewer xml={grobidTeiXml} />
+          ) : (
+            <XMLViewer xml={grobidTeiXml2} />
+          )}
         </CustomTabPanel>
         <CustomTabPanel value={format} index={2}>
-          <PDFAnnotationViewer
-            pdfUrl={pdfUrl2}
-            grobidTeiXml={grobidTeiXml2}
-            initialScale={1}
-          />
+          {(grobidTeiXml?.length ?? 0 > 0) ? (
+            <PDFAnnotationViewer
+              pdfUrl={pdfUrl}
+              grobidTeiXml={grobidTeiXml}
+              initialScale={1}
+            />
+          ) : (
+            <PDFAnnotationViewer
+              pdfUrl={pdfUrl2}
+              grobidTeiXml={grobidTeiXml2}
+              initialScale={1}
+            />
+          )}
         </CustomTabPanel>
       </Grid>
     </Grid>
