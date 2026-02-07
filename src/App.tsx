@@ -14,6 +14,7 @@ import React, { useState } from 'react';
 import Markdown from 'react-markdown';
 import XMLViewer from 'react-xml-viewer';
 
+import GrobidSvg from "../grobid.svg";
 import PDFAnnotationViewer from './components/PDFAnnotationViewer/PDFAnnotationViewer';
 import { GrobidAnnotation } from './components/PDFAnnotationViewer/types';
 import pdfUrl2 from './data/how_to_build_open_science_monitor.pdf';
@@ -150,9 +151,7 @@ const App: React.FC = () => {
           >
             <Container maxWidth="xl">
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                {/* <Article sx={{ fontSize: 32, color: 'primary.main' }} /> */}
-                  {/* Logo is an actual React component */}
-                <img src='./grobid.svg' style={{ height: '80px', width: '80px' }} />
+                <img alt="Grobid logo" src={GrobidSvg} style={{ height: "80px", width: "80px" }} />
                 <Typography variant="h4" fontWeight={700}>
                   GROBID PDF Annotation Viewer
                 </Typography>
