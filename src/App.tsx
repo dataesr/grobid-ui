@@ -1,4 +1,4 @@
-import { Article, CloudUpload } from '@mui/icons-material';
+import { CloudUpload } from '@mui/icons-material';
 import {
   Alert,
   Box,
@@ -150,7 +150,9 @@ const App: React.FC = () => {
           >
             <Container maxWidth="xl">
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Article sx={{ fontSize: 32, color: 'primary.main' }} />
+                {/* <Article sx={{ fontSize: 32, color: 'primary.main' }} /> */}
+                  {/* Logo is an actual React component */}
+                <img src='../grobid.svg' style={{ height: '80px', width: '80px' }} />
                 <Typography variant="h4" fontWeight={700}>
                   GROBID PDF Annotation Viewer
                 </Typography>
