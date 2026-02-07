@@ -3,11 +3,9 @@
  * Standalone class for programmatic conversion without React
  */
 
-import { BiblioReference, ConversionResult, ConversionOptions } from './types';
+import { ConversionResult, ConversionOptions } from './types';
 
 export class TEIConverter {
-  private readonly TEI_NS = 'http://www.tei-c.org/ns/1.0';
-
   /**
    * Convert TEI XML string to Markdown
    */

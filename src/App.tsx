@@ -92,7 +92,7 @@ const App: React.FC = () => {
         throw new Error(`TEI-XML processing failed: ${result.error}`);
       }
       setGrobidTeiXml(teiXml);
-      setMarkdown(result.markdown);
+      setMarkdown(result?.markdown ?? '');
       setLoading(false);
     } catch (err) {
       console.error('GROBID processing error:', err);
