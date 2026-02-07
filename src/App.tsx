@@ -1,27 +1,18 @@
-import './App.css'
-
-import Grid from '@mui/material/Grid'
-import { Document, Page } from 'react-pdf'
+import { FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup } from '@mui/material';
 import { useState } from 'react';
-import { pdfjs } from 'react-pdf';
+import Markdown from 'react-markdown';
+import XMLViewer from 'react-xml-viewer';
 
-import 'react-pdf/dist/Page/AnnotationLayer.css';
+import FileUploader from './components/FileUploader';
+import PDFAnnotationViewer from './components/PDFAnnotationViewer/PDFAnnotationViewer';
+import pdfUrl from './data/how_to_build_open_science_monitor.pdf';
+import markdown from './data/how_to_build_open_science_monitor.pdf.md?raw';
+import grobidTeiXml from './data/how_to_build_open_science_monitor.pdf.tei.xml?raw';
 
-import FileUploader from './components/FileUploader'
-import file from './data/how_to_build_open_science_monitor.pdf'
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
+import './App.css';
 
 function App() {
-  const [numPages, setNumPages] = useState<number>(1);
-  const [pageNumber, setPageNumber] = useState<number>(1);
-
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-    setNumPages(numPages);
-  }
+  const [format, setFormat] = useState("pdf");
 
   return (
     <Grid container spacing={3} sx={{ flexGrow: 1 }}>
@@ -29,12 +20,31 @@ function App() {
         <FileUploader />
       </Grid>
       <Grid size={8}>
-        <Document file={file} loading="Loading..." onLoadSuccess={onDocumentLoadSuccess}>
-          <Page className="pdf-page" pageNumber={pageNumber} renderAnnotationLayer={false} renderTextLayer={false} />
-        </Document>
-        <span onClick={() => setPageNumber(pageNumber - 1)}> Previous </span>
-        <span>Page {pageNumber} of {numPages}</span>
-        <span onClick={() => setPageNumber(pageNumber + 1)}> Next </span>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Format</FormLabel>
+          <RadioGroup aria-label="format" defaultValue={format} name="row-radio-buttons-group" onChange={(event) => setFormat(event.target.value)} row>
+            <FormControlLabel value="markdown" control={<Radio />} label="Markdown" />
+            <FormControlLabel value="pdf" control={<Radio />} label="PDF" />
+            <FormControlLabel value="xml" control={<Radio />} label="XML TEI" />
+          </RadioGroup>
+        </FormControl>
+        {(format === "pdf") && (
+          <PDFAnnotationViewer
+            pdfUrl={pdfUrl}
+            grobidTeiXml={grobidTeiXml}
+            initialScale={1}
+          />
+        )}
+        {(format === "xml") && (
+          <div>
+            <XMLViewer xml={grobidTeiXml} />
+          </div>
+        )}
+        {(format === "markdown") && (
+          <div>
+            <Markdown>{markdown}</Markdown>
+          </div>
+        )}
       </Grid>
     </Grid>
   )

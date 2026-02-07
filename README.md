@@ -88,6 +88,8 @@ PDF Viewer: https://github.com/wojtekmaj/react-pdf
 
 
 To run it locally: `npm start`
+[localhost:5173](http://localhost:5173/)
+
 
 ## Inspiration
 
