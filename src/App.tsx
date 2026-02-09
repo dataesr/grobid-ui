@@ -27,14 +27,14 @@ import { teiConverter } from './TEIConverter';
  * with GROBID integration
  */
 const App: React.FC = () => {
-  const [pdfUrl, setPdfUrl] = useState<string>('');
   const [, setPdfFile] = useState<File | null>(null);
-  const [grobidTeiXml, setGrobidTeiXml] = useState<string>('');
-  const [markdown, setMarkdown] = useState<string>('');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
+  const [grobidTeiXml, setGrobidTeiXml] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const [markdown, setMarkdown] = useState<string>('');
+  const [pdfUrl, setPdfUrl] = useState<string>('');
   const [selectedAnnotation, setSelectedAnnotation] = useState<GrobidAnnotation | null>(null);
-  const [format, setFormat] = useState(0);
+  const [tab, setTab] = useState(0);
 
   // Handle PDF file upload
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,9 +76,7 @@ const App: React.FC = () => {
       formData.append('teiCoordinates', 's');
       formData.append('teiCoordinates', 'title');
 
-      // Replace with your GROBID server URL
       const grobidUrl = 'https://lfoppiano-grobid.hf.space/api/processFulltextDocument';
-
       const response = await fetch(grobidUrl, {
         method: 'POST',
         body: formData,
@@ -94,6 +92,7 @@ const App: React.FC = () => {
       }
       setGrobidTeiXml(teiXml);
       setMarkdown(result?.markdown ?? '');
+      console.log(result?.markdown);
       setLoading(false);
     } catch (err) {
       console.error('GROBID processing error:', err);
@@ -109,7 +108,7 @@ const App: React.FC = () => {
   };
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
-    setFormat(newValue);
+    setTab(newValue);
   };
 
 
@@ -307,27 +306,35 @@ const App: React.FC = () => {
       </Grid>
       <Grid size={6}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={format} onChange={handleTabChange} aria-label="basic tabs example">
+          <Tabs value={tab} onChange={handleTabChange} aria-label="basic tabs example">
+            <Tab label="Markdown-raw" id="tab-markdown" aria-controls="tab-markdown" />
             <Tab label="Markdown" id="tab-markdown" aria-controls="tab-markdown" />
             <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" />
             <Tab label="PDF" id="tab-pdf" aria-controls="tab-pdf" />
           </Tabs>
         </Box>
-        <CustomTabPanel value={format} index={0}>
+        <CustomTabPanel value={tab} index={0}>
+          {(markdown?.length ?? 0 > 0) ? (
+            <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown}</Typography>
+          ) : (
+            <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown2}</Typography>
+          )}
+        </CustomTabPanel>
+        <CustomTabPanel value={tab} index={1}>
           {(markdown?.length ?? 0 > 0) ? (
             <Markdown>{markdown}</Markdown>
           ) : (
             <Markdown>{markdown2}</Markdown>
           )}
         </CustomTabPanel>
-        <CustomTabPanel value={format} index={1}>
+        <CustomTabPanel value={tab} index={2}>
           {(grobidTeiXml?.length ?? 0 > 0) ? (
             <XMLViewer xml={grobidTeiXml} />
           ) : (
             <XMLViewer xml={grobidTeiXml2} />
           )}
         </CustomTabPanel>
-        <CustomTabPanel value={format} index={2}>
+        <CustomTabPanel value={tab} index={3}>
           {(grobidTeiXml?.length ?? 0 > 0) ? (
             <PDFAnnotationViewer
               pdfUrl={pdfUrl}
