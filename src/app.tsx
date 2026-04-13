@@ -17,15 +17,8 @@ import XMLViewer from 'react-xml-viewer';
 import GrobidSvg from "../grobid.svg";
 import PDFAnnotationViewer from './components/PDFAnnotationViewer/PDFAnnotationViewer';
 import { GrobidAnnotation } from './components/PDFAnnotationViewer/types';
-import pdfUrl2 from './data/how_to_build_open_science_monitor.pdf';
-import markdown2 from './data/how_to_build_open_science_monitor.pdf.md?raw';
-import grobidTeiXml2 from './data/how_to_build_open_science_monitor.pdf.tei.xml?raw';
 import { teiConverter } from './TEIConverter';
 
-/**
- * Example App demonstrating how to use the PDFAnnotationViewer component
- * with GROBID integration
- */
 const App: React.FC = () => {
   const [, setPdfFile] = useState<File | null>(null);
   const [error, setError] = useState<string>('');
@@ -122,10 +115,10 @@ const App: React.FC = () => {
 
     return (
       <div
-        role="tabpanel"
+        aria-labelledby={`simple-tab-${index}`}
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
+        role="tabpanel"
         {...other}
       >
         {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
@@ -307,44 +300,32 @@ const App: React.FC = () => {
       <Grid size={6}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={tab} onChange={handleTabChange} aria-label="basic tabs example">
-            <Tab label="Markdown-raw" id="tab-markdown" aria-controls="tab-markdown" />
-            <Tab label="Markdown" id="tab-markdown" aria-controls="tab-markdown" />
-            <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" />
-            <Tab label="PDF" id="tab-pdf" aria-controls="tab-pdf" />
+            <Tab label="Markdown-raw" id="tab-markdown-raw" aria-controls="tab-markdown-raw" style={{ color: 'white' }} />
+            <Tab label="Markdown" id="tab-markdown" aria-controls="tab-markdown" style={{ color: 'white' }} />
+            <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" style={{ color: 'white' }} />
+            <Tab label="PDF" id="tab-pdf" aria-controls="tab-pdf" style={{ color: 'white' }} />
           </Tabs>
         </Box>
         <CustomTabPanel value={tab} index={0}>
-          {(markdown?.length ?? 0 > 0) ? (
+          {((markdown?.length ?? 0) > 0) && (
             <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown}</Typography>
-          ) : (
-            <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown2}</Typography>
           )}
         </CustomTabPanel>
         <CustomTabPanel value={tab} index={1}>
-          {(markdown?.length ?? 0 > 0) ? (
+          {((markdown?.length ?? 0) > 0) && (
             <Markdown>{markdown}</Markdown>
-          ) : (
-            <Markdown>{markdown2}</Markdown>
           )}
         </CustomTabPanel>
         <CustomTabPanel value={tab} index={2}>
-          {(grobidTeiXml?.length ?? 0 > 0) ? (
+          {((grobidTeiXml?.length ?? 0) > 0) && (
             <XMLViewer xml={grobidTeiXml} />
-          ) : (
-            <XMLViewer xml={grobidTeiXml2} />
           )}
         </CustomTabPanel>
         <CustomTabPanel value={tab} index={3}>
-          {(grobidTeiXml?.length ?? 0 > 0) ? (
+          {((grobidTeiXml?.length ?? 0) > 0) && (
             <PDFAnnotationViewer
               pdfUrl={pdfUrl}
               grobidTeiXml={grobidTeiXml}
-              initialScale={1}
-            />
-          ) : (
-            <PDFAnnotationViewer
-              pdfUrl={pdfUrl2}
-              grobidTeiXml={grobidTeiXml2}
               initialScale={1}
             />
           )}
