@@ -70,3 +70,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+#dropZone {
+  border: 2px dashed transparent;
+
+  &:hover,
+  &.dragover {
+    border: 2px dashed #1976d2;
+  }
+}

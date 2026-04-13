@@ -10,7 +10,7 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
 import XMLViewer from 'react-xml-viewer';
 
@@ -30,8 +30,9 @@ const App: React.FC = () => {
   const [tab, setTab] = useState(0);
 
   // Handle PDF file upload
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleFileUpload = (event: any) => {
+    const file = event?.target?.files?.[0] ?? event?.dataTransfer?.files?.[0];
     if (file && file.type === 'application/pdf') {
       setPdfFile(file);
       setPdfUrl(URL.createObjectURL(file));
@@ -85,7 +86,6 @@ const App: React.FC = () => {
       }
       setGrobidTeiXml(teiXml);
       setMarkdown(result?.markdown ?? '');
-      console.log(result?.markdown);
       setLoading(false);
     } catch (err) {
       console.error('GROBID processing error:', err);
@@ -104,7 +104,6 @@ const App: React.FC = () => {
     setTab(newValue);
   };
 
-
   interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -112,7 +111,6 @@ const App: React.FC = () => {
   }
   function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-
     return (
       <div
         aria-labelledby={`simple-tab-${index}`}
@@ -126,6 +124,25 @@ const App: React.FC = () => {
     );
   }
 
+  useEffect(() => {
+    const dropZone = document.getElementById("dropZone");
+    const fileInput = document.getElementById("fileInput");
+    dropZone?.addEventListener("click", () => fileInput?.click());
+    dropZone?.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+    dropZone?.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+    dropZone?.addEventListener("drop", (event) => {
+      event.preventDefault();
+      dropZone.classList.remove("dragover");
+      handleFileUpload(event);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Grid container spacing={3} sx={{ flexGrow: 1, width: '100%' }}>
       <Grid size={4} offset={{ xs: 1, md: 1 }}>
@@ -134,11 +151,11 @@ const App: React.FC = () => {
           <Paper
             elevation={0}
             sx={{
-              py: 3,
-              px: 4,
+              bgcolor: 'white',
               borderBottom: '1px solid',
               borderColor: 'divider',
-              bgcolor: 'white',
+              px: 4,
+              py: 3,
             }}
           >
             <Container maxWidth="xl">
@@ -157,7 +174,7 @@ const App: React.FC = () => {
           <Container maxWidth="xl" sx={{ py: 4 }}>
             {/* Upload Section */}
             {!pdfUrl && (
-              <Paper elevation={2} sx={{ p: 4, textAlign: 'center' }}>
+              <Paper elevation={2} id="dropZone" sx={{ p: 4, textAlign: 'center' }}>
                 <CloudUpload sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
                 <Typography variant="h6" gutterBottom>
                   Upload a PDF Document
@@ -166,17 +183,18 @@ const App: React.FC = () => {
                   Select a PDF file to visualize its structure with GROBID annotations
                 </Typography>
                 <Button
-                  variant="contained"
                   component="label"
+                  id="fileInput"
                   startIcon={<CloudUpload />}
                   sx={{ mt: 2 }}
+                  variant="contained"
                 >
                   Choose PDF File
                   <input
-                    type="file"
                     accept="application/pdf"
                     hidden
                     onChange={handleFileUpload}
+                    type="file"
                   />
                 </Button>
               </Paper>
