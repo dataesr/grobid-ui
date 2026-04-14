@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  width: 100%;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -72,10 +76,30 @@ button:focus-visible {
 }
 
 #dropZone {
-  border: 2px dashed transparent;
+  border: 1px dashed transparent;
+  box-shadow: none;
+  background-color: #f2f7ee;
 
   &:hover,
   &.dragover {
-    border: 2px dashed #1976d2;
+    border-color: #659243;
+    background-color: #e4efdc;
+  }
+
+  &.disable {
+    background-color: lightgray;
+    color: grey;
+    cursor: default;
+
+    > svg,
+    > p {
+      color: grey !important;
+    }
+
+
+    &:hover,
+    &.dragover {
+      border-color: transparent;
+    }
   }
 }

@@ -3,6 +3,7 @@ import {
   Alert,
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   Paper,
@@ -124,6 +125,8 @@ const App: React.FC = () => {
     );
   }
 
+  const isLoaded = (grobidTeiXml.length > 0) && (markdown.length > 0) && (pdfUrl.length > 0) && !loading;
+
   useEffect(() => {
     const dropZone = document.getElementById("dropZone");
     const fileInput = document.getElementById("fileInput");
@@ -145,7 +148,7 @@ const App: React.FC = () => {
 
   return (
     <Grid container spacing={3} sx={{ flexGrow: 1, width: '100%' }}>
-      <Grid size={4} offset={{ xs: 1, md: 1 }}>
+      <Grid size={isLoaded ? 4 : 10} offset={{ xs: 1, md: 1 }}>
         <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>
           {/* Header */}
           <Paper
@@ -158,46 +161,50 @@ const App: React.FC = () => {
               py: 3,
             }}
           >
-            <Container maxWidth="xl">
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Grid container maxWidth="xl">
+              <Grid size={1}>
                 <img alt="Grobid logo" src={GrobidSvg} style={{ height: "80px", width: "80px" }} />
+              </Grid>
+              <Grid>
                 <Typography variant="h4" fontWeight={700}>
                   GROBID PDF Annotation Viewer
                 </Typography>
-              </Box>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                Upload a PDF to extract and visualize document structure with GROBID
-              </Typography>
-            </Container>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                  Upload a PDF to extract and visualize document structure with GROBID
+                </Typography>
+              </Grid>
+            </Grid>
           </Paper>
 
           <Container maxWidth="xl" sx={{ py: 4 }}>
             {/* Upload Section */}
-            {!pdfUrl && (
-              <Paper elevation={2} id="dropZone" sx={{ p: 4, textAlign: 'center' }}>
-                <CloudUpload sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6" gutterBottom>
-                  Upload a PDF Document
-                </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  Select a PDF file to visualize its structure with GROBID annotations
-                </Typography>
-                <Button
-                  component="label"
-                  id="fileInput"
-                  startIcon={<CloudUpload />}
-                  sx={{ mt: 2 }}
-                  variant="contained"
-                >
-                  Choose PDF File
-                  <input
-                    accept="application/pdf"
-                    hidden
-                    onChange={handleFileUpload}
-                    type="file"
+            {!isLoaded && (
+              <>
+                <Paper elevation={2} id="dropZone" sx={{ p: 4, textAlign: 'center' }} className={loading ? 'disable' : ''}>
+                  <CloudUpload sx={{ fontSize: 64, color: '#659243', mb: 2 }} />
+                  <Typography variant="h6" gutterBottom>
+                    Click to upload or drop a PDF Document
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
+                    Select a PDF file to visualize its structure with GROBID annotations
+                  </Typography>
+                </Paper>
+                {loading && (
+                  <CircularProgress
+                    aria-label="Processing PDF with GROBID..."
+                    enableTrackSlot
+                    size={80}
+                    sx={{
+                      color: '#659243',
+                      display: 'flex',
+                      margin: 'auto',
+                      position: 'relative',
+                      top: -160,
+                      zIndex: 1,
+                    }}
                   />
-                </Button>
-              </Paper>
+                )}
+              </>
             )}
 
             {/* Error Alert */}
@@ -207,15 +214,8 @@ const App: React.FC = () => {
               </Alert>
             )}
 
-            {/* Loading Alert */}
-            {loading && (
-              <Alert severity="info" sx={{ mb: 2 }}>
-                Processing PDF with GROBID... This may take a moment.
-              </Alert>
-            )}
-
             {/* PDF Viewer */}
-            {pdfUrl && (
+            {isLoaded && (
               <Paper elevation={2} sx={{ height: 'calc(100vh - 280px)', minHeight: 600 }}>
                 <PDFAnnotationViewer
                   pdfUrl={pdfUrl}
@@ -227,7 +227,7 @@ const App: React.FC = () => {
             )}
 
             {/* Selected Annotation Details */}
-            {selectedAnnotation && (
+            {isLoaded && selectedAnnotation && (
               <Paper elevation={2} sx={{ mt: 2, p: 3 }}>
                 <Typography variant="h6" gutterBottom>
                   Selected Annotation Details
@@ -272,30 +272,8 @@ const App: React.FC = () => {
               </Paper>
             )}
 
-            {/* Instructions */}
-            {!pdfUrl && (
-              <Paper elevation={0} sx={{ mt: 4, p: 3, bgcolor: 'primary.50', border: '1px solid', borderColor: 'primary.200' }}>
-                <Typography variant="h6" gutterBottom>
-                  Getting Started
-                </Typography>
-                <Typography variant="body2" component="div">
-                  <ol style={{ marginTop: 8, paddingLeft: 20 }}>
-                    <li>Make sure you have a GROBID server running (default: http://localhost:8070)</li>
-                    <li>Upload a PDF document using the button above</li>
-                    <li>The PDF will be automatically processed with GROBID</li>
-                    <li>View extracted annotations overlaid on the PDF</li>
-                    <li>Click on annotations to see details</li>
-                    <li>Toggle annotation types to filter the view</li>
-                  </ol>
-                </Typography>
-                <Typography variant="body2" sx={{ mt: 2 }}>
-                  <strong>Note:</strong> Update the GROBID server URL in the code if your server is not running on localhost:8070
-                </Typography>
-              </Paper>
-            )}
-
             {/* New Upload Button (when PDF is already loaded) */}
-            {pdfUrl && (
+            {isLoaded && (
               <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                 <Button
                   variant="outlined"
@@ -315,40 +293,42 @@ const App: React.FC = () => {
           </Container>
         </Box>
       </Grid>
-      <Grid size={6}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={tab} onChange={handleTabChange} aria-label="basic tabs example">
-            <Tab label="Markdown-raw" id="tab-markdown-raw" aria-controls="tab-markdown-raw" style={{ color: 'white' }} />
-            <Tab label="Markdown" id="tab-markdown" aria-controls="tab-markdown" style={{ color: 'white' }} />
-            <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" style={{ color: 'white' }} />
-            <Tab label="PDF" id="tab-pdf" aria-controls="tab-pdf" style={{ color: 'white' }} />
-          </Tabs>
-        </Box>
-        <CustomTabPanel value={tab} index={0}>
-          {((markdown?.length ?? 0) > 0) && (
-            <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown}</Typography>
-          )}
-        </CustomTabPanel>
-        <CustomTabPanel value={tab} index={1}>
-          {((markdown?.length ?? 0) > 0) && (
-            <Markdown>{markdown}</Markdown>
-          )}
-        </CustomTabPanel>
-        <CustomTabPanel value={tab} index={2}>
-          {((grobidTeiXml?.length ?? 0) > 0) && (
-            <XMLViewer xml={grobidTeiXml} />
-          )}
-        </CustomTabPanel>
-        <CustomTabPanel value={tab} index={3}>
-          {((grobidTeiXml?.length ?? 0) > 0) && (
-            <PDFAnnotationViewer
-              pdfUrl={pdfUrl}
-              grobidTeiXml={grobidTeiXml}
-              initialScale={1}
-            />
-          )}
-        </CustomTabPanel>
-      </Grid>
+      {isLoaded && (
+        <Grid size={6}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={tab} onChange={handleTabChange} aria-label="basic tabs example">
+              <Tab label="Markdown-raw" id="tab-markdown-raw" aria-controls="tab-markdown-raw" style={{ color: 'white' }} />
+              <Tab label="Markdown" id="tab-markdown" aria-controls="tab-markdown" style={{ color: 'white' }} />
+              <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" style={{ color: 'white' }} />
+              <Tab label="PDF" id="tab-pdf" aria-controls="tab-pdf" style={{ color: 'white' }} />
+            </Tabs>
+          </Box>
+          <CustomTabPanel value={tab} index={0}>
+            {((markdown?.length ?? 0) > 0) && (
+              <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown}</Typography>
+            )}
+          </CustomTabPanel>
+          <CustomTabPanel value={tab} index={1}>
+            {((markdown?.length ?? 0) > 0) && (
+              <Markdown>{markdown}</Markdown>
+            )}
+          </CustomTabPanel>
+          <CustomTabPanel value={tab} index={2}>
+            {((grobidTeiXml?.length ?? 0) > 0) && (
+              <XMLViewer xml={grobidTeiXml} />
+            )}
+          </CustomTabPanel>
+          <CustomTabPanel value={tab} index={3}>
+            {((grobidTeiXml?.length ?? 0) > 0) && (
+              <PDFAnnotationViewer
+                pdfUrl={pdfUrl}
+                grobidTeiXml={grobidTeiXml}
+                initialScale={1}
+              />
+            )}
+          </CustomTabPanel>
+        </Grid>
+      )}
     </Grid>
   );
 };
