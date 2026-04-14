@@ -21,11 +21,23 @@ import { GrobidAnnotation } from './components/PDFAnnotationViewer/types';
 import { teiConverter } from './TEIConverter';
 import { capitalize } from './utils';
 
+type grobidObjectType = {
+  abstract?: string,
+  affiliations?: string,
+  authors?: string,
+  date?: string | null,
+  grobidVersion?: string | null,
+  keywords?: string,
+  licence?: string,
+  publisher?: string,
+  title?: string,
+}
+
 const App: React.FC = () => {
   const [, setPdfFile] = useState<File | null>(null);
   const [error, setError] = useState<string>('');
   const [grobidTeiXml, setGrobidTeiXml] = useState<string>('');
-  const [grobidObject, setGrobidObject] = useState<object>({});
+  const [grobidObject, setGrobidObject] = useState<grobidObjectType>({});
   const [loading, setLoading] = useState(false);
   const [markdown, setMarkdown] = useState<string>('');
   const [pdfUrl, setPdfUrl] = useState<string>('');
@@ -46,7 +58,7 @@ const App: React.FC = () => {
     }
   };
 
-  const extractMetadataFromTei = (xmlString: string): object => {
+  const extractMetadataFromTei = (xmlString: string): grobidObjectType => {
     const xmlDoc = new DOMParser().parseFromString(xmlString, 'text/xml');
     const xmlHeader = xmlDoc.getElementsByTagName('teiHeader')[0];
     const xmlAuthors = xmlHeader.getElementsByTagName('author');
@@ -117,13 +129,13 @@ const App: React.FC = () => {
 
       const teiXml = await response.text();
       const result = teiConverter.convert(teiXml);
-      const m = extractMetadataFromTei(teiXml);
+      const grobidObjectTmp: grobidObjectType = extractMetadataFromTei(teiXml);
       if (!result.success) {
         throw new Error(`TEI-XML processing failed: ${result.error}`);
       }
       setGrobidTeiXml(teiXml);
       setMarkdown(result?.markdown ?? '');
-      setGrobidObject(m)
+      setGrobidObject(grobidObjectTmp)
       setLoading(false);
     } catch (err) {
       console.error('GROBID processing error:', err);
@@ -345,7 +357,7 @@ const App: React.FC = () => {
             {((markdown?.length ?? 0) > 0) && (
               <div className='grobid-tab-metadata'>
                 <ul>
-                  {Object.keys(grobidObject).map((key) => grobidObject[key] ? <li><span>{capitalize(key)}:</span> {grobidObject[key]}</li> : '')}
+                  {Object.keys(grobidObject).map((key: string) => grobidObject[key as keyof grobidObjectType] ? <li><span>{capitalize(key)}:</span> {grobidObject[key as keyof grobidObjectType]}</li> : '')}
                 </ul>
               </div>
             )}
