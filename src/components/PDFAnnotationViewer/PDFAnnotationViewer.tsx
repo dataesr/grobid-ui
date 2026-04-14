@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { FitScreen, Layers, NavigateBefore, NavigateNext, ZoomIn, ZoomOut } from '@mui/icons-material';
+import { Box, IconButton, Paper, Slider, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import * as pdfjsLib from 'pdfjs-dist';
-import { Box, IconButton, Slider, ToggleButtonGroup, ToggleButton, Tooltip, Paper } from '@mui/material';
-import { ZoomIn, ZoomOut, NavigateBefore, NavigateNext, Layers, FitScreen } from '@mui/icons-material';
-import { GrobidAnnotation, AnnotationType } from './types';
-import { parseGrobidCoordinates } from './grobidParser';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+
 import AnnotationLayer from './AnnotationLayer';
 import AnnotationLegend from './AnnotationLegend';
+import { parseGrobidCoordinates } from './grobidParser';
+import { AnnotationType, GrobidAnnotation } from './types';
 import './PDFAnnotationViewer.css';
 
 // Set PDF.js worker
@@ -264,7 +265,20 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
             </IconButton>
           </Tooltip>
         </Box>
+      </Paper>
 
+      <Paper
+        elevation={2}
+        sx={{
+          alignItems: 'center',
+          borderBottom: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 0,
+          display: 'flex',
+          gap: 2,
+          p: 1.5,
+        }}
+      >
         {/* Annotation Type Filter */}
         {annotations.length > 0 && (
           <Box sx={{ ml: 'auto', display: 'flex', gap: 2, alignItems: 'center' }}>
