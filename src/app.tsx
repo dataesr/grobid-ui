@@ -1,4 +1,4 @@
-import { CloudUpload } from '@mui/icons-material';
+import { AddLink, CloudUpload } from '@mui/icons-material';
 import {
   Alert,
   Box,
@@ -9,6 +9,7 @@ import {
   Paper,
   Tab,
   Tabs,
+  TextField,
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
@@ -34,7 +35,7 @@ type grobidObjectType = {
 }
 
 const App: React.FC = () => {
-  const [, setPdfFile] = useState<File | null>(null);
+  const [, setPdfFile] = useState<Blob | File | null>(null);
   const [error, setError] = useState<string>('');
   const [grobidTeiXml, setGrobidTeiXml] = useState<string>('');
   const [grobidObject, setGrobidObject] = useState<grobidObjectType>({});
@@ -60,8 +61,8 @@ const App: React.FC = () => {
 
   const extractMetadataFromTei = (xmlString: string): grobidObjectType => {
     const xmlDoc = new DOMParser().parseFromString(xmlString, 'text/xml');
-    const xmlHeader = xmlDoc.getElementsByTagName('teiHeader')[0];
-    const xmlAuthors = xmlHeader.getElementsByTagName('author');
+    const xmlHeader = xmlDoc.getElementsByTagName('teiHeader')?.[0];
+    const xmlAuthors = xmlHeader?.getElementsByTagName('author') ?? [];
     const authors = [];
     for (let i = 0; i < xmlAuthors.length; i++) {
       let author = xmlAuthors[i].getElementsByTagName('persName')[0].getElementsByTagName('forename')[0].textContent;
@@ -72,27 +73,27 @@ const App: React.FC = () => {
       author += ')';
       authors.push(author);
     }
-    const xmlKeywords = xmlHeader.getElementsByTagName('keywords')[0].getElementsByTagName('term');
+    const xmlKeywords = xmlHeader?.getElementsByTagName('keywords')?.[0]?.getElementsByTagName('term') ?? [];
     const keywords = []
     for (let i = 0; i < xmlKeywords.length; i++) {
       keywords.push(xmlKeywords[i].textContent);
     }
 
     return {
-      title: xmlHeader.getElementsByTagName('title')[0].textContent,
-      date: xmlHeader.getElementsByTagName('date')[0].getAttribute('when'),
+      title: xmlHeader?.getElementsByTagName('title')?.[0]?.textContent,
+      date: xmlHeader?.getElementsByTagName('date')?.[0]?.getAttribute('when'),
       authors: authors.join('; '),
-      affiliations: xmlHeader.getElementsByTagName('affiliation')[0].textContent,
+      affiliations: xmlHeader?.getElementsByTagName('affiliation')?.[0]?.textContent,
       keywords: keywords.join('; '),
-      licence: xmlHeader.getElementsByTagName('licence')[0].textContent,
-      publisher: xmlHeader.getElementsByTagName('publisher')[0].textContent,
-      grobidVersion: xmlHeader.getElementsByTagName('application')[0].getAttribute('version'),
-      abstract: xmlHeader.getElementsByTagName('abstract')[0].textContent,
+      licence: xmlHeader?.getElementsByTagName('licence')?.[0]?.textContent,
+      publisher: xmlHeader?.getElementsByTagName('publisher')?.[0]?.textContent,
+      grobidVersion: xmlHeader?.getElementsByTagName('application')?.[0]?.getAttribute('version'),
+      abstract: xmlHeader?.getElementsByTagName('abstract')?.[0]?.textContent,
     }
   }
 
   // Process PDF with GROBID API
-  const processWithGrobid = async (file: File) => {
+  const processWithGrobid = async (file: Blob | File) => {
     setLoading(true);
     setError('');
 
@@ -154,6 +155,27 @@ const App: React.FC = () => {
     setTab(newValue);
   };
 
+  const downloadFile = async (url: string) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const pdfBlob = await response.blob();
+      if (pdfBlob && pdfBlob.type === 'application/pdf') {
+        setPdfFile(pdfBlob);
+        setPdfUrl(URL.createObjectURL(pdfBlob));
+        setError('');
+        processWithGrobid(pdfBlob);
+      } else {
+        setError('Please select a valid PDF file');
+      }
+    } catch (error) {
+      console.error(error);
+      setError('Error while fetching online PDF');
+    }
+  }
+
   interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -178,8 +200,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const dropZone = document.getElementById("dropZone");
-    const fileInput = document.getElementById("fileInput");
-    dropZone?.addEventListener("click", () => fileInput?.click());
     dropZone?.addEventListener("dragover", (event) => {
       event.preventDefault();
       dropZone.classList.add("dragover");
@@ -229,14 +249,23 @@ const App: React.FC = () => {
             {/* Upload Section */}
             {!isLoaded && (
               <>
-                <Paper elevation={2} id="dropZone" sx={{ p: 4, textAlign: 'center' }} className={loading ? 'disable' : ''}>
-                  <CloudUpload sx={{ fontSize: 64, color: '#659243', mb: 2 }} />
+                <Paper elevation={2} id="dropZone" sx={{ p: 4, textAlign: 'center' }} className={loading ? 'disable' : ''} onClick={() => document?.getElementById("fileInput")?.click()} >
+                  <CloudUpload sx={{ color: '#659243', fontSize: 64, mb: 2 }} />
                   <Typography variant="h6" gutterBottom>
                     Click to upload or drop a PDF Document
                   </Typography>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     Select a PDF file to visualize its structure with GROBID annotations
+                    <br />
+                    OR
+                    <br />
+                    Seize the URL of a PDF
                   </Typography>
+                  <Box>
+                    <AddLink sx={{ color: '#659243', mt: 2, mr: 1 }} />
+                    <TextField label="URL of a PDF" variant="standard" onChange={(e) => downloadFile(e.target.value)} onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} style={{ width: "25%" }} />
+                  </Box>
+                  <input type="file" id="fileInput" accept=".pdf" className="hidden"></input>
                 </Paper>
                 {loading && (
                   <CircularProgress
@@ -357,7 +386,7 @@ const App: React.FC = () => {
             {((markdown?.length ?? 0) > 0) && (
               <div className='grobid-tab-metadata'>
                 <ul>
-                  {Object.keys(grobidObject).map((key: string) => grobidObject[key as keyof grobidObjectType] ? <li><span>{capitalize(key)}:</span> {grobidObject[key as keyof grobidObjectType]}</li> : '')}
+                  {Object.keys(grobidObject).map((key: string) => grobidObject[key as keyof grobidObjectType] ? <li key={key}><span>{capitalize(key)}:</span> {grobidObject[key as keyof grobidObjectType]}</li> : '')}
                 </ul>
               </div>
             )}

@@ -84,6 +84,7 @@ button:focus-visible {
   &.dragover {
     border-color: #659243;
     background-color: #e4efdc;
+    cursor: pointer;
   }
 
   &.disable {
@@ -118,4 +119,8 @@ button:focus-visible {
       padding-right: 10px;
     }
   }
+}
+
+.hidden {
+  display: none;
 }
