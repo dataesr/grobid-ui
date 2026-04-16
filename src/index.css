@@ -124,3 +124,21 @@ button:focus-visible {
 .hidden {
   display: none;
 }
+
+.grobid-tab-metadata {
+  li > rs[type="person"] {
+    text-decoration: underline green solid 3px;
+  }
+  li > rs[type="funder"] {
+    text-decoration: underline red solid 3px;
+  }
+  li > rs[type="grantNumber"] {
+    text-decoration: underline blue solid 3px;
+  }
+  li > rs[type="grantName"] {
+    text-decoration: underline lightblue solid 3px;
+  }
+  li > rs[type="institution"] {
+    text-decoration: underline yellow solid 3px;
+  }
+}

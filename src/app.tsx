@@ -17,15 +17,15 @@ import Markdown from 'react-markdown';
 import XMLViewer from 'react-xml-viewer';
 
 import GrobidSvg from '../grobid.svg';
+import Metadata from './components/metadata';
 import PDFAnnotationViewer from './components/PDFAnnotationViewer/PDFAnnotationViewer';
 import { GrobidAnnotation } from './components/PDFAnnotationViewer/types';
 import { teiConverter } from './TEIConverter';
-import { capitalize } from './utils';
 
 type grobidObjectType = {
   abstract?: string,
-  affiliations?: string,
-  authors?: string,
+  acknowledgements?: HTMLElement[],
+  authors?: object[],
   date?: string | null,
   grobidVersion?: string | null,
   keywords?: string,
@@ -65,12 +65,16 @@ const App: React.FC = () => {
     const xmlAuthors = xmlHeader?.getElementsByTagName('author') ?? [];
     const authors = [];
     for (let i = 0; i < xmlAuthors.length; i++) {
-      let author = xmlAuthors[i].getElementsByTagName('persName')[0].getElementsByTagName('forename')[0].textContent;
-      author += ' ';
-      author += xmlAuthors[i].getElementsByTagName('persName')[0].getElementsByTagName('surname')[0].textContent;
-      author += ' (';
-      author += xmlAuthors[i].getElementsByTagName('affiliation')[0].getElementsByTagName('orgName')[0].textContent;
-      author += ')';
+      const xmlAffiliations = xmlAuthors[i].getElementsByTagName('affiliation');
+      const affiliations = [];
+      for (let j = 0; j < xmlAffiliations.length; j++) {
+        affiliations.push(xmlAffiliations[j].getElementsByTagName('note')[0].textContent);
+      }
+      const author = {
+        forename: xmlAuthors[i].getElementsByTagName('persName')[0].getElementsByTagName('forename')[0].textContent,
+        surname: xmlAuthors[i].getElementsByTagName('persName')[0].getElementsByTagName('surname')[0].textContent,
+        affiliations,
+      }
       authors.push(author);
     }
     const xmlKeywords = xmlHeader?.getElementsByTagName('keywords')?.[0]?.getElementsByTagName('term') ?? [];
@@ -78,17 +82,21 @@ const App: React.FC = () => {
     for (let i = 0; i < xmlKeywords.length; i++) {
       keywords.push(xmlKeywords[i].textContent);
     }
+    const acknowledgements: HTMLElement[] = [];
+    xmlDoc.querySelectorAll<HTMLElement>('div[type="acknowledgement"] p > s').forEach((node) => {
+      acknowledgements.push(node as HTMLElement);
+    });
 
     return {
       title: xmlHeader?.getElementsByTagName('title')?.[0]?.textContent,
+      authors,
       date: xmlHeader?.getElementsByTagName('date')?.[0]?.getAttribute('when'),
-      authors: authors.join('; '),
-      affiliations: xmlHeader?.getElementsByTagName('affiliation')?.[0]?.textContent,
       keywords: keywords.join('; '),
+      abstract: xmlHeader?.getElementsByTagName('abstract')?.[0]?.textContent,
+      acknowledgements,
       licence: xmlHeader?.getElementsByTagName('licence')?.[0]?.textContent,
       publisher: xmlHeader?.getElementsByTagName('publisher')?.[0]?.textContent,
       grobidVersion: xmlHeader?.getElementsByTagName('application')?.[0]?.getAttribute('version'),
-      abstract: xmlHeader?.getElementsByTagName('abstract')?.[0]?.textContent,
     }
   }
 
@@ -231,7 +239,7 @@ const App: React.FC = () => {
             }}
           >
             <Grid container maxWidth="xl">
-              <Grid size={1}>
+              <Grid size={isLoaded ? 2 : 1}>
                 <img alt="Grobid logo" src={GrobidSvg} style={{ height: "80px", width: "80px" }} />
               </Grid>
               <Grid>
@@ -383,37 +391,33 @@ const App: React.FC = () => {
             </Tabs>
           </Box>
           <CustomTabPanel value={tab} index={0}>
-            {((markdown?.length ?? 0) > 0) && (
-              <div className='grobid-tab-metadata'>
-                <ul>
-                  {Object.keys(grobidObject).map((key: string) => grobidObject[key as keyof grobidObjectType] ? <li key={key}><span>{capitalize(key)}:</span> {grobidObject[key as keyof grobidObjectType]}</li> : '')}
-                </ul>
-              </div>
-            )}
+            {((markdown?.length ?? 0) > 0) &&
+              <Metadata grobidObject={grobidObject} />
+            }
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={1}>
-            {((markdown?.length ?? 0) > 0) && (
+            {((markdown?.length ?? 0) > 0) &&
               <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown}</Typography>
-            )}
+            }
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={2}>
-            {((markdown?.length ?? 0) > 0) && (
+            {((markdown?.length ?? 0) > 0) &&
               <Markdown>{markdown}</Markdown>
-            )}
+            }
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={3}>
-            {((grobidTeiXml?.length ?? 0) > 0) && (
-              <XMLViewer xml={grobidTeiXml} theme={{ separatorColor: 'grey' }} />
-            )}
+            {((grobidTeiXml?.length ?? 0) > 0) &&
+              <XMLViewer xml={grobidTeiXml} theme={{ separatorColor: 'grey', textColor: 'white' }} />
+            }
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={4}>
-            {((grobidTeiXml?.length ?? 0) > 0) && (
+            {((grobidTeiXml?.length ?? 0) > 0) &&
               <PDFAnnotationViewer
                 pdfUrl={pdfUrl}
                 grobidTeiXml={grobidTeiXml}
                 initialScale={1}
               />
-            )}
+            }
           </CustomTabPanel>
         </Grid>
       )}
