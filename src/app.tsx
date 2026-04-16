@@ -18,27 +18,16 @@ import XMLViewer from 'react-xml-viewer';
 
 import GrobidSvg from '../grobid.svg';
 import Metadata from './components/metadata';
+import { GrobidObjectType } from './components/metadata/types';
 import PDFAnnotationViewer from './components/PDFAnnotationViewer/PDFAnnotationViewer';
 import { GrobidAnnotation } from './components/PDFAnnotationViewer/types';
 import { teiConverter } from './TEIConverter';
-
-type grobidObjectType = {
-  abstract?: string,
-  acknowledgements?: HTMLElement[],
-  authors?: object[],
-  date?: string | null,
-  grobidVersion?: string | null,
-  keywords?: string,
-  licence?: string,
-  publisher?: string,
-  title?: string,
-}
 
 const App: React.FC = () => {
   const [, setPdfFile] = useState<Blob | File | null>(null);
   const [error, setError] = useState<string>('');
   const [grobidTeiXml, setGrobidTeiXml] = useState<string>('');
-  const [grobidObject, setGrobidObject] = useState<grobidObjectType>({});
+  const [grobidObject, setGrobidObject] = useState<GrobidObjectType>({});
   const [loading, setLoading] = useState(false);
   const [markdown, setMarkdown] = useState<string>('');
   const [pdfUrl, setPdfUrl] = useState<string>('');
@@ -59,7 +48,7 @@ const App: React.FC = () => {
     }
   };
 
-  const extractMetadataFromTei = (xmlString: string): grobidObjectType => {
+  const extractMetadataFromTei = (xmlString: string): GrobidObjectType => {
     const xmlDoc = new DOMParser().parseFromString(xmlString, 'text/xml');
     const xmlHeader = xmlDoc.getElementsByTagName('teiHeader')?.[0];
     const xmlAuthors = xmlHeader?.getElementsByTagName('author') ?? [];
@@ -86,6 +75,10 @@ const App: React.FC = () => {
     xmlDoc.querySelectorAll<HTMLElement>('div[type="acknowledgement"] p > s').forEach((node) => {
       acknowledgements.push(node as HTMLElement);
     });
+    const references: HTMLElement[] = [];
+    xmlDoc.querySelectorAll<HTMLElement>('div[type="references"] biblStruct').forEach((node) => {
+      references.push(node as HTMLElement);
+    });
 
     return {
       title: xmlHeader?.getElementsByTagName('title')?.[0]?.textContent,
@@ -94,6 +87,7 @@ const App: React.FC = () => {
       keywords: keywords.join('; '),
       abstract: xmlHeader?.getElementsByTagName('abstract')?.[0]?.textContent,
       acknowledgements,
+      references,
       licence: xmlHeader?.getElementsByTagName('licence')?.[0]?.textContent,
       publisher: xmlHeader?.getElementsByTagName('publisher')?.[0]?.textContent,
       grobidVersion: xmlHeader?.getElementsByTagName('application')?.[0]?.getAttribute('version'),
@@ -138,7 +132,7 @@ const App: React.FC = () => {
 
       const teiXml = await response.text();
       const result = teiConverter.convert(teiXml);
-      const grobidObjectTmp: grobidObjectType = extractMetadataFromTei(teiXml);
+      const grobidObjectTmp: GrobidObjectType = extractMetadataFromTei(teiXml);
       if (!result.success) {
         throw new Error(`TEI-XML processing failed: ${result.error}`);
       }
