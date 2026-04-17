@@ -383,26 +383,28 @@ const App: React.FC = () => {
               <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" style={{ color: 'white' }} />
             </Tabs>
           </Box>
-          <CustomTabPanel value={tab} index={0}>
-            {((markdown?.length ?? 0) > 0) &&
-              <Metadata grobidObject={grobidObject} />
-            }
-          </CustomTabPanel>
-          <CustomTabPanel value={tab} index={1}>
-            {((markdown?.length ?? 0) > 0) &&
-              <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown}</Typography>
-            }
-          </CustomTabPanel>
-          <CustomTabPanel value={tab} index={2}>
-            {((markdown?.length ?? 0) > 0) &&
-              <Markdown>{markdown}</Markdown>
-            }
-          </CustomTabPanel>
-          <CustomTabPanel value={tab} index={3}>
-            {((grobidTeiXml?.length ?? 0) > 0) &&
-              <XMLViewer xml={grobidTeiXml} theme={{ separatorColor: 'grey', textColor: 'white' }} showLineNumbers={true} />
-            }
-          </CustomTabPanel>
+          <Box sx={{ overflowY: "scroll", height: 'calc(100vh - 50px)', minHeight: 600 }}>
+            <CustomTabPanel value={tab} index={0}>
+              {((markdown?.length ?? 0) > 0) &&
+                <Metadata grobidObject={grobidObject} />
+              }
+            </CustomTabPanel>
+            <CustomTabPanel value={tab} index={1}>
+              {((markdown?.length ?? 0) > 0) &&
+                <Typography style={{ whiteSpace: "pre-wrap" }}>{markdown}</Typography>
+              }
+            </CustomTabPanel>
+            <CustomTabPanel value={tab} index={2}>
+              {((markdown?.length ?? 0) > 0) &&
+                <Markdown>{markdown}</Markdown>
+              }
+            </CustomTabPanel>
+            <CustomTabPanel value={tab} index={3}>
+              {((grobidTeiXml?.length ?? 0) > 0) &&
+                <XMLViewer xml={grobidTeiXml} theme={{ separatorColor: 'grey', textColor: 'white' }} showLineNumbers={true} />
+              }
+            </CustomTabPanel>
+          </Box>
         </Grid>
       )}
     </Grid>
