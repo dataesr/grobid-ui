@@ -1,13 +1,15 @@
 import { FitScreen, Layers, NavigateBefore, NavigateNext, ZoomIn, ZoomOut } from '@mui/icons-material';
 import { Box, IconButton, Paper, Slider, ToggleButton, ToggleButtonGroup, Tooltip } from '@mui/material';
 import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfJSViewer from 'pdfjs-dist/web/pdf_viewer';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import * as pdfjsTypes from 'pdfjs-dist/types/web/pdf_viewer';
 import AnnotationLayer from './AnnotationLayer';
 import AnnotationLegend from './AnnotationLegend';
 import { parseGrobidCoordinates } from './grobidParser';
-import { AnnotationType, GrobidAnnotation } from './types';
 import './PDFAnnotationViewer.css';
+import { AnnotationType, GrobidAnnotation } from './types';
 
 // Set PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -19,21 +21,26 @@ interface PDFAnnotationViewerProps {
   initialScale?: number;
 }
 
+const ANNOTATION_MODE = {
+  VIEW: 1,
+  EDIT: 2,
+};
+
 const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
   pdfUrl,
   grobidTeiXml,
   onAnnotationClick,
   initialScale = 1.5,
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  const pdfProxyRef = useRef<pdfjsTypes.PDFDocumentProxy | null>(null);
+  const eventBus = new pdfJSViewer.EventBus();
 
-  const [pdfDoc, setPdfDoc] = useState<pdfjsLib.PDFDocumentProxy | null>(null);
   const [pageNum, setPageNum] = useState(1);
   const [scale, setScale] = useState(initialScale);
   const [numPages, setNumPages] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const [annotations, setAnnotations] = useState<GrobidAnnotation[]>([]);
   const [visibleAnnotationTypes, setVisibleAnnotationTypes] = useState<Set<AnnotationType>>(
@@ -41,39 +48,6 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
   );
   const [selectedAnnotation, setSelectedAnnotation] = useState<GrobidAnnotation | null>(null);
   const [viewport, setViewport] = useState<pdfjsLib.PageViewport | null>(null);
-
-  // Load PDF document
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadPDF = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const loadingTask = pdfjsLib.getDocument(pdfUrl);
-        const pdf = await loadingTask.promise;
-
-        if (isMounted) {
-          setPdfDoc(pdf);
-          setNumPages(pdf.numPages);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.error('Error loading PDF:', err);
-        if (isMounted) {
-          setError('Failed to load PDF document');
-          setLoading(false);
-        }
-      }
-    };
-
-    loadPDF();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [pdfUrl]);
 
   // Parse GROBID annotations
   useEffect(() => {
@@ -87,49 +61,67 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
     }
   }, [grobidTeiXml]);
 
-  // Render current page
+  const loadPDF = async () => {
+    setLoading(true);
+    
+    if (pdfProxyRef?.current) {
+      await pdfProxyRef.current?.destroy();
+    }
+    let containerOffSetHeight = 0;
+    let containerOffSetWidth = 0;
+    if (mainContainerRef?.current && containerRef?.current) {
+      containerRef.current.innerHTML = '';
+      containerOffSetHeight = mainContainerRef.current.offsetHeight;
+      containerOffSetWidth = mainContainerRef.current.offsetWidth;
+    }
+    try {
+      pdfProxyRef.current = await pdfjsLib.getDocument(pdfUrl).promise;
+      await renderPDF({ containerOffSetHeight, containerOffSetWidth });
+    } catch (error) {
+      console.error('error in [PDFV2.loadPDF]', error);
+    }
+    setLoading(false);
+  };
+
+  const renderPDF = async ({ containerOffSetHeight, containerOffSetWidth }: { containerOffSetHeight: number, containerOffSetWidth: number }) => {
+    const { numPages } = pdfProxyRef.current;
+    for (let index = 0; index < numPages; index++) {
+      const pageProxy = await pdfProxyRef?.current?.getPage(index + 1);
+      const scaledViewPort = pageProxy?.getViewport({ scale: 1 }) ?? null;
+      setViewport(scaledViewPort);
+      const calculatedScale = Math.min(
+        containerOffSetHeight / scaledViewPort.height,
+        containerOffSetWidth / scaledViewPort.width
+      );
+      await renderPage({
+        page: pageProxy,
+        pageNumber: index + 1,
+        viewPort: scaledViewPort,
+        scale: calculatedScale,
+      });
+    }
+  };
+
+  const renderPage = async ({ page, pageNumber, viewPort, scale }) => {
+    const pdfPageView = new pdfJSViewer.PDFPageView({
+      container: containerRef?.current ?? undefined,
+      id: pageNumber,
+      scale,
+      defaultViewport: viewPort,
+      eventBus,
+      annotationMode: ANNOTATION_MODE.VIEW,
+      // annotationMode: ANNOTATION_MODE.EDIT
+    });
+    pdfPageView.setPdfPage(page);
+    await pdfPageView.draw();
+  };
+
   useEffect(() => {
-    if (!pdfDoc || !canvasRef.current) return;
-
-    let isMounted = true;
-
-    const renderPage = async () => {
-      try {
-        const page = await pdfDoc.getPage(pageNum);
-        const pageViewport = page.getViewport({ scale });
-
-        if (!isMounted) return;
-
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const context = canvas.getContext('2d');
-        if (!context) return;
-
-        canvas.height = pageViewport.height;
-        canvas.width = pageViewport.width;
-
-        const renderContext = {
-          canvasContext: context,
-          viewport: pageViewport,
-        };
-
-        await page.render(renderContext).promise;
-
-        if (isMounted) {
-          setViewport(pageViewport);
-        }
-      } catch (err) {
-        console.error('Error rendering page:', err);
-      }
-    };
-
-    renderPage();
-
+    loadPDF();
     return () => {
-      isMounted = false;
+      pdfProxyRef.current?.destroy();
     };
-  }, [pdfDoc, pageNum, scale]);
+  }, [pdfUrl]);
 
   // Navigation handlers
   const goToPrevPage = useCallback(() => {
@@ -171,17 +163,7 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
   }, [onAnnotationClick]);
 
   // Filter annotations for current page
-  const currentPageAnnotations = annotations.filter(
-    (ann) => ann.page === pageNum && visibleAnnotationTypes.has(ann.type)
-  );
-
-  if (error) {
-    return (
-      <Box sx={{ p: 4, textAlign: 'center', color: 'error.main' }}>
-        {error}
-      </Box>
-    );
-  }
+  const currentPageAnnotations = annotations;
 
   return (
     <Box className="pdf-annotation-viewer" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -304,27 +286,30 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
 
       {/* PDF Canvas and Annotations */}
       <Box
-        ref={containerRef}
         sx={{
-          flex: 1,
-          overflow: 'auto',
-          display: 'flex',
-          justifyContent: 'center',
           alignItems: 'flex-start',
+          bgcolor: 'grey.100',
+          display: 'flex',
+          flex: 1,
+          justifyContent: 'center',
+          overflow: 'auto',
           p: 2,
-          bgcolor: 'grey.100'
         }}
       >
         <Box sx={{ position: 'relative', display: 'inline-block' }}>
-          <canvas ref={canvasRef} style={{ display: 'block', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} />
+          <div
+            className="h-[75vh] overflow-scroll relative"
+            ref={mainContainerRef}
+          >
+            <div className="pdf-viewer overflow-auto" ref={containerRef}></div>
+          </div>
 
           {viewport && (
             <AnnotationLayer
               annotations={currentPageAnnotations}
-              viewport={viewport}
-              scale={scale}
-              selectedAnnotation={selectedAnnotation}
               onAnnotationClick={handleAnnotationClick}
+              selectedAnnotation={selectedAnnotation}
+              viewport={viewport}
             />
           )}
         </Box>

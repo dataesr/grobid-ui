@@ -142,3 +142,7 @@ button:focus-visible {
     text-decoration: underline yellow solid 3px;
   }
 }
+
+.page {
+  padding: 10px;
+}

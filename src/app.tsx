@@ -381,7 +381,6 @@ const App: React.FC = () => {
               <Tab label="Markdown-raw" id="tab-markdown-raw" aria-controls="tab-markdown-raw" style={{ color: 'white' }} />
               <Tab label="Markdown" id="tab-markdown" aria-controls="tab-markdown" style={{ color: 'white' }} />
               <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" style={{ color: 'white' }} />
-              <Tab label="PDF" id="tab-pdf" aria-controls="tab-pdf" style={{ color: 'white' }} />
             </Tabs>
           </Box>
           <CustomTabPanel value={tab} index={0}>
@@ -401,16 +400,7 @@ const App: React.FC = () => {
           </CustomTabPanel>
           <CustomTabPanel value={tab} index={3}>
             {((grobidTeiXml?.length ?? 0) > 0) &&
-              <XMLViewer xml={grobidTeiXml} theme={{ separatorColor: 'grey', textColor: 'white' }} />
-            }
-          </CustomTabPanel>
-          <CustomTabPanel value={tab} index={4}>
-            {((grobidTeiXml?.length ?? 0) > 0) &&
-              <PDFAnnotationViewer
-                pdfUrl={pdfUrl}
-                grobidTeiXml={grobidTeiXml}
-                initialScale={1}
-              />
+              <XMLViewer xml={grobidTeiXml} theme={{ separatorColor: 'grey', textColor: 'white' }} showLineNumbers={true} />
             }
           </CustomTabPanel>
         </Grid>

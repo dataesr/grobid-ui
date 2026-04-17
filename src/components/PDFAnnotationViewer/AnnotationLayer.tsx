@@ -21,8 +21,10 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
   const transformCoordinates = (annotation: GrobidAnnotation) => {
     // PDF coordinates are from bottom-left, canvas from top-left
     const x = annotation.bbox.x;
+    // const y = annotation.bbox.y;
+    const y = annotation.page * viewport.height + annotation.bbox.y;
+    // const y = "750";
     // const y = viewport.height - annotation.bbox.y - annotation.bbox.height;
-    const y = annotation.bbox.y;
     const width = annotation.bbox.width;
     const height = annotation.bbox.height;
 
@@ -35,11 +37,14 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
         position: 'absolute',
         top: 0,
         left: 0,
-        width: viewport.width,
-        height: viewport.height,
+        // width: viewport.width,
+        width: '100%',
+        // height: viewport.height,
+        height: '100%',
         pointerEvents: 'none',
       }}
-      viewBox={`0 0 ${viewport.width} ${viewport.height}`}
+      // viewBox={`0 0 ${viewport.width} ${viewport.height}`}
+      viewBox={`0 0 100% 100%`}
     >
       <defs>
         {/* Define filters for hover effects */}

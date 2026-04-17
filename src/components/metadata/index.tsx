@@ -7,7 +7,6 @@ const Metadata = ({ grobidObject }: { grobidObject: GrobidObjectType }) => {
       <ul>
         {Object.keys(grobidObject).map((key: string) => {
           const value = grobidObject[key as keyof GrobidObjectType];
-          console.log(key, value);
           if (!value) return '';
           if (key === 'authors')
             return <li key={key}><span>{capitalize(key)}:</span><ul>{grobidObject['authors']?.map((author: AuthorType, index: number) =>
