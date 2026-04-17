@@ -63,7 +63,7 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
 
   const loadPDF = async () => {
     setLoading(true);
-    
+
     if (pdfProxyRef?.current) {
       await pdfProxyRef.current?.destroy();
     }
@@ -76,6 +76,7 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
     }
     try {
       pdfProxyRef.current = await pdfjsLib.getDocument(pdfUrl).promise;
+      setNumPages(pdfProxyRef.current.numPages)
       await renderPDF({ containerOffSetHeight, containerOffSetWidth });
     } catch (error) {
       console.error('error in [PDFV2.loadPDF]', error);
@@ -84,25 +85,27 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
   };
 
   const renderPDF = async ({ containerOffSetHeight, containerOffSetWidth }: { containerOffSetHeight: number, containerOffSetWidth: number }) => {
-    const { numPages } = pdfProxyRef.current;
+    const numPages = pdfProxyRef?.current?.numPages ?? 0;
     for (let index = 0; index < numPages; index++) {
       const pageProxy = await pdfProxyRef?.current?.getPage(index + 1);
-      const scaledViewPort = pageProxy?.getViewport({ scale: 1 }) ?? null;
-      setViewport(scaledViewPort);
-      const calculatedScale = Math.min(
-        containerOffSetHeight / scaledViewPort.height,
-        containerOffSetWidth / scaledViewPort.width
-      );
-      await renderPage({
-        page: pageProxy,
-        pageNumber: index + 1,
-        viewPort: scaledViewPort,
-        scale: calculatedScale,
-      });
+      if (pageProxy) {
+        const scaledViewPort = pageProxy.getViewport({ scale: 1 });
+        setViewport(scaledViewPort);
+        const calculatedScale = Math.min(
+          containerOffSetHeight / scaledViewPort.height,
+          containerOffSetWidth / scaledViewPort.width
+        );
+        await renderPage({
+          page: pageProxy,
+          pageNumber: index + 1,
+          viewPort: scaledViewPort,
+          scale: calculatedScale,
+        });
+      }
     }
   };
 
-  const renderPage = async ({ page, pageNumber, viewPort, scale }) => {
+  const renderPage = async ({ page, pageNumber, viewPort, scale }: { page: unknown, pageNumber: number, viewPort: pdfjsLib.PageViewport, scale?: number | undefined }) => {
     const pdfPageView = new pdfJSViewer.PDFPageView({
       container: containerRef?.current ?? undefined,
       id: pageNumber,
