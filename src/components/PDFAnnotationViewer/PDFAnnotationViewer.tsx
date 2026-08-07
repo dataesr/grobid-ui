@@ -27,10 +27,10 @@ const ANNOTATION_MODE = {
 };
 
 const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
-  pdfUrl,
   grobidTeiXml,
-  onAnnotationClick,
   initialScale = 1.5,
+  onAnnotationClick,
+  pdfUrl,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
@@ -124,7 +124,7 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
     return () => {
       pdfProxyRef.current?.destroy();
     };
-  }, [pdfUrl]);
+  }, []);
 
   // Navigation handlers
   const goToPrevPage = useCallback(() => {
@@ -259,7 +259,6 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
           borderBottom: '1px solid',
           borderColor: 'divider',
           borderRadius: 0,
-          display: 'flex',
           gap: 2,
           p: 1.5,
         }}
@@ -295,7 +294,9 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
           display: 'flex',
           flex: 1,
           justifyContent: 'center',
-          overflow: 'auto',
+          maxHeight: '400px',
+          overflowX: 'hidden',
+          overflowY: 'scroll',
           p: 2,
         }}
       >
@@ -311,6 +312,7 @@ const PDFAnnotationViewer: React.FC<PDFAnnotationViewerProps> = ({
             <AnnotationLayer
               annotations={currentPageAnnotations}
               onAnnotationClick={handleAnnotationClick}
+              scale={initialScale}
               selectedAnnotation={selectedAnnotation}
               viewport={viewport}
             />

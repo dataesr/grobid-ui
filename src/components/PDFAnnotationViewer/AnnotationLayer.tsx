@@ -4,29 +4,26 @@ import * as pdfjsLib from 'pdfjs-dist';
 
 interface AnnotationLayerProps {
   annotations: GrobidAnnotation[];
-  viewport: pdfjsLib.PageViewport;
-  scale?: number;
-  selectedAnnotation: GrobidAnnotation | null;
   onAnnotationClick: (annotation: GrobidAnnotation) => void;
+  scale: number;
+  selectedAnnotation: GrobidAnnotation | null;
+  viewport: pdfjsLib.PageViewport;
 }
 
 const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
   annotations,
-  viewport,
-  // scale,
-  selectedAnnotation,
   onAnnotationClick,
+  scale,
+  selectedAnnotation,
+  viewport,
 }) => {
   // Convert PDF coordinates to canvas coordinates
   const transformCoordinates = (annotation: GrobidAnnotation) => {
     // PDF coordinates are from bottom-left, canvas from top-left
-    const x = annotation.bbox.x;
-    // const y = annotation.bbox.y;
-    const y = annotation.page * viewport.height + annotation.bbox.y;
-    // const y = "750";
-    // const y = viewport.height - annotation.bbox.y - annotation.bbox.height;
-    const width = annotation.bbox.width;
-    const height = annotation.bbox.height;
+    const x = annotation.bbox.x * scale;
+    const y = annotation.page * viewport.height * scale + annotation.bbox.y;
+    const width = annotation.bbox.width * scale;
+    const height = annotation.bbox.height * scale;
 
     return { x, y, width, height };
   };
@@ -34,16 +31,13 @@ const AnnotationLayer: React.FC<AnnotationLayerProps> = ({
   return (
     <svg
       style={{
+        height: '100%',
+        left: 0,
+        pointerEvents: 'none',
         position: 'absolute',
         top: 0,
-        left: 0,
-        // width: viewport.width,
         width: '100%',
-        // height: viewport.height,
-        height: '100%',
-        pointerEvents: 'none',
       }}
-      // viewBox={`0 0 ${viewport.width} ${viewport.height}`}
       viewBox={`0 0 100% 100%`}
     >
       <defs>
