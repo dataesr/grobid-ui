@@ -12,7 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Markdown from 'react-markdown';
 import XMLViewer from 'react-xml-viewer';
 
@@ -33,6 +33,10 @@ const App: React.FC = () => {
   const [pdfUrl, setPdfUrl] = useState<string>('');
   const [selectedAnnotation, setSelectedAnnotation] = useState<GrobidAnnotation | null>(null);
   const [tab, setTab] = useState(0);
+
+  const firstDivRef = useRef<HTMLDivElement>(null);
+  const secondDivRef = useRef<HTMLDivElement>(null);
+
 
   // Handle PDF file upload
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -121,7 +125,7 @@ const App: React.FC = () => {
       formData.append('teiCoordinates', 's');
       formData.append('teiCoordinates', 'title');
 
-      const grobidUrl = 'https://lfoppiano-grobid.hf.space/api/processFulltextDocument';
+      const grobidUrl = 'https://lfoppiano-grobid-dev.hf.space/api/processFulltextDocument';
       const response = await fetch(grobidUrl, {
         method: 'POST',
         body: formData,
@@ -217,6 +221,32 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleScrollFirst = (event: React.UIEvent<HTMLElement>) => {
+    event.stopPropagation();
+    console.log("handleScrollFirst");
+    if (secondDivRef?.current) {
+      // secondDivRef.current.scrollTop = event.currentTarget.scrollTop;
+      secondDivRef.current.scrollTop = 0;
+    } else {
+      console.log("no second ref");
+    }
+  };
+
+  const handleScrollSecond = (event: React.UIEvent<HTMLElement>) => {
+    console.log("handleScrollSecond");
+    console.log(firstDivRef);
+    console.log(firstDivRef.current);
+    event.stopPropagation();
+    if (firstDivRef?.current) {
+      // firstDivRef.current.scrollTop = event.currentTarget.scrollTop;
+      firstDivRef.current.scrollTop = 0;
+    } else {
+      console.log("no first ref");
+      console.log(firstDivRef);
+    }
+  };
+
+
   return (
     <Grid container spacing={3} sx={{ flexGrow: 1, width: '100%' }}>
       <Grid size={isLoaded ? 5 : 10} offset={{ xs: 1, md: 1 }}>
@@ -296,14 +326,16 @@ const App: React.FC = () => {
 
             {/* PDF Viewer */}
             {isLoaded && (
-              <Paper elevation={2} sx={{ height: 'calc(100vh - 280px)', minHeight: 600 }}>
-                <PDFAnnotationViewer
-                  grobidTeiXml={grobidTeiXml}
-                  initialScale={1}
-                  onAnnotationClick={handleAnnotationClick}
-                  pdfUrl={pdfUrl}
-                />
-              </Paper>
+              <Box sx={{ height: 'calc(100vh - 280px)', minHeight: 600 }} onScroll={handleScrollFirst} ref={firstDivRef}>
+                <Paper elevation={2}>
+                  <PDFAnnotationViewer
+                    grobidTeiXml={grobidTeiXml}
+                    initialScale={1}
+                    onAnnotationClick={handleAnnotationClick}
+                    pdfUrl={pdfUrl}
+                  />
+                </Paper>
+              </Box>
             )}
 
             {/* Selected Annotation Details */}
@@ -383,7 +415,7 @@ const App: React.FC = () => {
               <Tab label="XML-TEI" id="tab-tei-xml" aria-controls="tab-tei-xml" style={{ color: 'white' }} />
             </Tabs>
           </Box>
-          <Box sx={{ overflowY: "scroll", height: 'calc(100vh - 50px)', minHeight: 600 }}>
+          <Box onScroll={handleScrollSecond} ref={secondDivRef} sx={{ overflowY: "scroll", height: 'calc(100vh - 50px)', minHeight: 600 }}>
             <CustomTabPanel value={tab} index={0}>
               {((markdown?.length ?? 0) > 0) &&
                 <Metadata grobidObject={grobidObject} />
